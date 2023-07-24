@@ -1,6 +1,8 @@
-const { staticFiles, port, treblleApiKey, treblleProjectId } = require('./config/environment')
 const express = require('express')
 const treblle = require('@treblle/express') // Creates API documentation
+
+const { staticFiles, port, treblleApiKey, treblleProjectId } = require('./config/environment')
+const transactionsRoute = require('./routes/transactionsRoute')
 
 const app = express()
 
@@ -16,6 +18,8 @@ app.use(
   }))
 
 // ---------------------- ROUTES
+app.use('/api', transactionsRoute)
+
 app.get('/', (req, res) => {
   res.send('Hola, este es el servidor de Express!')
 })
