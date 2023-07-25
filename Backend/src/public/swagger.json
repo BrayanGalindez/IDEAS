@@ -12,6 +12,56 @@
   ],
   "paths": {
     "/api/transactions": {
+      "post": {
+        "operationId": "3721b1b1-38c3-45b5-bc29-edbfacc7efed",
+        "tags": [
+          "api"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "monto": {
+                    "type": "number"
+                  },
+                  "origen_usuario_id": {
+                    "type": "integer"
+                  },
+                  "destino_usuario_id": {
+                    "type": "integer"
+                  },
+                  "tarjeta_origen": {
+                    "type": "string"
+                  },
+                  "tarjeta_destino": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "POST /api/transactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "operationId": "19d74d3b-c861-432a-b869-ad708563adc1",
         "tags": [
@@ -44,17 +94,66 @@
                         "type": "string"
                       },
                       "origen_usuario_id": {
-                        "type": "string"
+                        "type": "integer"
                       },
                       "tarjeta_origen": {
                         "type": "string"
                       },
                       "destino_usuario_id": {
-                        "type": "string"
+                        "type": "integer"
                       },
                       "tarjeta_destino": {
                         "type": "string"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "post": {
+        "operationId": "5e8d2802-4156-476b-8129-fc34ef54e8ca",
+        "tags": [
+          "api"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "apellido": {
+                    "type": "string"
+                  },
+                  "pin": {
+                    "type": "string"
+                  },
+                  "saldo": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "POST /api/users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
