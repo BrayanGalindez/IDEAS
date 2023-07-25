@@ -34,15 +34,15 @@ exports.postUserTransaction = async (req, res) => {
     // Tiene saldo para hacer la transaccion?
     const userBalance = await UsersObject.userBalance(req.body.origen_usuario_id)
     if (userBalance < req.body.monto) {
-      res.status(400).json({
+      return res.status(400).json({
         message: 'No tiene saldo suficiente.'
       })
     }
 
     // Estan correctos los datos de destino?
     const userRecipientId = await CardsObject.getUserIdByCardNumber(req.body.tarjeta_destino)
-    if (userRecipientId !== req.body.destino_usuario_id) {
-      res.status(400).json({
+    if (!userRecipientId) {
+      return res.status(400).json({
         message: 'Destinatario no valido.'
       })
     }
@@ -50,6 +50,7 @@ exports.postUserTransaction = async (req, res) => {
     // La transaccion espera el id de tarjeta y no sus numeros
     req.body.tarjeta_origen = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_origen)
     req.body.tarjeta_destino = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_destino)
+    req.body.destino_usuario_id = userRecipientId
 
     // Hacer la transaccion
     // Primero intento registrar la transaccion
