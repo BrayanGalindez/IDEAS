@@ -13,6 +13,13 @@ class Transactions {
     return response.rows
   }
 
+  async aprobbeTransaction (trasaction_id) {
+    await this.connectToDb()
+    const updateQuery = 'UPDATE ideatransactions SET registrada = true WHERE id = $1'
+    const response = await this.client.query(updateQuery, [trasaction_id])
+    return response.rowCount
+  }
+
   async postUserTransaction (data) {
     await this.connectToDb()
     const insertQuery = 'INSERT INTO ideatransactions (monto, origen_usuario_id, tarjeta_origen, destino_usuario_id, tarjeta_destino, fecha) VALUES ($1, $2, $3, $4, $5, $6)'
