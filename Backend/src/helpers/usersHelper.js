@@ -12,6 +12,20 @@ class Users {
     const response = await this.client.query(insertQuery, [data.nombre, data.apellido, data.pin, data.saldo, true])
     return response.rowCount
   }
+
+  async userBalance (id) {
+    await this.connectToDb()
+    const selectQuery = 'SELECT saldo FROM ideausers WHERE id = $1'
+    const response = await this.client.query(selectQuery, [id])
+    return response.rows[0].saldo
+  }
+
+  async changeUserBalance (id, amount) {
+    await this.connectToDb()
+    const updateQuery = 'UPDATE ideausers SET saldo = saldo + $1 WHERE id = $2'
+    const response = await this.client.query(updateQuery, [amount, id])
+    return response.rowCount
+  }
 }
 
 module.exports.UsersObject = new Users()
