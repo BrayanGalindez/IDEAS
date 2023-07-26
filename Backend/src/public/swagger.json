@@ -30,9 +30,6 @@
                   "origen_usuario_id": {
                     "type": "integer"
                   },
-                  "destino_usuario_id": {
-                    "type": "integer"
-                  },
                   "tarjeta_origen": {
                     "type": "string"
                   },
@@ -44,6 +41,7 @@
             }
           }
         },
+        "description":"Registra una transaccion y actualiza el saldo de los usuarios.",
         "responses": {
           "200": {
             "description": "POST /api/transactions",
@@ -77,6 +75,7 @@
             }
           }
         ],
+        "description":"Devuelve todas las transacciones de un usuario.",
         "responses": {
           "200": {
             "description": "GET /api/transactions",
@@ -144,6 +143,7 @@
             }
           }
         },
+        "description":"Registra un nuevo usuario (mas alla del alcance del proyecto).",
         "responses": {
           "200": {
             "description": "POST /api/users",

@@ -56,7 +56,7 @@ exports.postUserTransaction = async (req, res) => {
     // Primero intento registrar la transaccion
     const transactionResponse = await TransactionsObject.postUserTransaction(req.body)
     if (transactionResponse !== 1) {
-      res.status(400).json({
+      return res.status(400).json({
         message: 'Error al realizar la transaccion. Comuniquese con el banco.'
       })
     }
