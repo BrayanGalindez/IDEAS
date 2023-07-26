@@ -10,7 +10,6 @@ const app = express()
 // ---------------------- MIDDLEWARES
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(staticFiles))
 app.use('/api/doc', express.static(staticFiles))
 app.use(
   treblle({
