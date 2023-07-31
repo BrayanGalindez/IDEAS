@@ -51,7 +51,9 @@ function Table({ data, columns }) {
   });
   return (
     <div className="w3-container">
+      <h1 className="text-3xl font-bold mb-4 mt-4">Filtro:</h1>
       <input
+        className="border-color-theme  bg-gray-300 px-4 py-2 mb-2 rounded-md outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         type="text"
         value={filtering}
         onChange={(e) => setFiltering(e.target.value)}
@@ -85,9 +87,9 @@ function Table({ data, columns }) {
         </thead>
 
         <tbody>
-        {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
