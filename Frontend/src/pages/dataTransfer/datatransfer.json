@@ -1,0 +1,12 @@
+{
+    "card1": {
+      "cardNumber": "**** **** **** 1234",
+      "cardHolder": "John Doe",
+      "expirationDate": "12/23"
+    },
+    "card2": {
+      "cardNumber": "**** **** **** 5678",
+      "cardHolder": "Jane Smith",
+      "expirationDate": "06/24"
+    }
+  }
