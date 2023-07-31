@@ -26,6 +26,13 @@ class Cards {
     const response = await this.client.query(selectQuery, [cardId])
     return response.rowCount > 0 ? response.rows[0].numero_tarjeta : null
   }
+
+  async getCardsNumberByUserId (userId) {
+    await this.connectToDb()
+    const selectQuery = 'SELECT numero_tarjeta FROM ideacards WHERE usuario_id = $1'
+    const response = await this.client.query(selectQuery, [userId])
+    return response.rowCount > 0 ? response.rows : null
+  }
 }
 
 module.exports.CardsObject = new Cards()
