@@ -8,7 +8,11 @@ const client = new Client({
   host: postgreshost,
   database: postgresdb,
   password: postgrespassword,
-  port: postgresport
+  port: postgresport,
+  ssl: {
+    rejectUnauthorized: false,
+    sslmode: 'require'
+  }
 })
 
 let isConected
