@@ -18,6 +18,11 @@ function Navbar() {
         </a>
       </li>
       <li className="mx-4 my-6 md:my-0">
+        <a className="text-xl font-[Open Sans] text-white hover:text-color-theme-hover  duration-500 cursor-pointer"  onClick={() => navigate('/historial2')}>
+          Historial2
+        </a>
+      </li>
+      <li className="mx-4 my-6 md:my-0">
         <a className="text-xl font-[Open Sans] text-white hover:text-color-theme-hover  duration-500 cursor-pointer"  onClick={() => navigate('/transfer')}  >
           Transferir
         </a>
