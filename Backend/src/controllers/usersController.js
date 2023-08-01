@@ -1,5 +1,6 @@
-const { UsersObject } = require('../helpers/usersHelper')
-const { CardsObject } = require('../helpers/cardsHelper')
+const { UsersObject } = require('../dao/usersDao')
+const { CardsObject } = require('../dao/cardsDao')
+const { generateJwtToken } = require('../middlewares/auth')
 
 const bcrypt = require('bcrypt')
 const saltRounds = 8
@@ -11,6 +12,7 @@ exports.userLogin = async (req, res) => {
     if (response.length > 0) {
       response[0].cards = await CardsObject.getCardsNumberByUserId(response[0].id)
       delete response[0].pin
+      response[0].jwtToken = generateJwtToken(response[0].id)
       res.status(200).json(response)
     } else {
       res.status(404).json({

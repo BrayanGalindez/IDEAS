@@ -31,6 +31,13 @@ class Users {
     return response.rowCount
   }
 
+  async getUserNameById (id) {
+    await this.connectToDb()
+    const selectQuery = 'SELECT nombre, apellido FROM ideausers WHERE id = $1'
+    const response = await this.client.query(selectQuery, [id])
+    return response.rows[0]
+  }
+
   // ---------------------- Para desarrollo
   async newUser (data) {
     await this.connectToDb()
