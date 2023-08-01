@@ -5,13 +5,13 @@
  https://ideas-backend-git-backend-taber76.vercel.app/
 
   ### POST /api/users/login
-  body{cardnumber:string, pin:string} (el pin para todos los usuarios es 1234) **devuelve** un JSON con los datos de usuarios he incluye un JWT.
+  `body{cardnumber:string, pin:string}` (el pin para todos los usuarios es 1234) **devuelve** un JSON con los datos de usuarios he incluye un JWT.
 
   ### GET /api/transactions?id=...
-  query id de usuario + headers: { 'Autorization': `Bearer ${JWT recibido al hacer el login}`} **devuelve** un JSON con todas las transacciones del usuario.
+  query id de usuario + headers: { 'Autorization': 'Bearer ${JWT recibido al hacer el login}'} **devuelve** un JSON con todas las transacciones del usuario.
 
   ### POST /api/transactions
-  body{monto: number, tarjeta_origen:string, tarjeta_destino:string} + headers: { 'Autorization': `Bearer ${JWT recibido al hacer el login}`} **devuelve** un mensaje en JSON.
+  `body{monto: number, tarjeta_origen:string, tarjeta_destino:string}` + headers: { 'Autorization': 'Bearer ${JWT recibido al hacer el login}'} **devuelve** un mensaje en JSON.
 
 
   ### **EXTRA** GET /api/users
