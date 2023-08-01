@@ -10,7 +10,6 @@ const app = express()
 // ---------------------- MIDDLEWARES
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/api/doc', express.static(staticFiles))
 app.use(
   treblle({
     apiKey: treblleApiKey,
@@ -20,10 +19,7 @@ app.use(
 // ---------------------- ROUTES
 app.use('/api', transactionsRoute)
 app.use('/api', usersRoute)
-
-app.get('/', (req, res) => {
-  res.send('Hola, este es el servidor de Express!')
-})
+app.use('/', express.static(staticFiles))
 
 // ---------------------- START SERVER
 app.listen(port, () => {

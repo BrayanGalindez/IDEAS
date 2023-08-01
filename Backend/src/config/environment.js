@@ -3,6 +3,9 @@ require('dotenv').config()
 module.exports.staticFiles = process.env.STATICFILES
 module.exports.port = process.env.PORT
 
+module.exports.jwtsecretkey = process.env.JWTSECRETKEY
+module.exports.jwtexpires = process.env.JWTEXPIRES
+
 module.exports.postgresuser = process.env.POSTGRESUSER
 module.exports.postgreshost = process.env.POSTGRESHOST
 module.exports.postgresdb = process.env.POSTGRESDB
