@@ -9,6 +9,8 @@ import UserProfile from "./components/UserProfile";
 import ConfirmTransfer from "./pages/ConfirmTransfer";
 import Footer from "./components/Footer";
 import Table from "./components/Table";
+import ClosedSession from "./pages/ClosedSession";
+import CompletedTransaction from "./pages/CompletedTransaction";
 function App() {
   return (
     <div className="app">
@@ -23,6 +25,8 @@ function App() {
             <Route path="/transfer" element={<Transfer />} />
             <Route path="/usuario" element={<UserProfile />} />
             <Route path="/confirmacion" element={<ConfirmTransfer/>} />
+            <Route path="/cerrar" element={<ClosedSession/>} />
+            <Route path="/finalizada" element={<CompletedTransaction/>} />
           </Routes>
           <Footer />
         </Router>
