@@ -17,7 +17,7 @@ class Users {
     return []
   }
 
-  async userBalance (id) {
+  async getUserBalance (id) {
     await this.connectToDb()
     const selectQuery = 'SELECT saldo FROM ideausers WHERE id = $1'
     const response = await this.client.query(selectQuery, [id])

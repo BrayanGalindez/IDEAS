@@ -7,6 +7,9 @@
   ### POST /api/users/login
   `body{cardNumber:string, pin:string}` (el pin para todos los usuarios es 1234) **devuelve** un JSON con los datos de usuarios he incluye un JWT.
 
+  ### GET /api/users/balance
+  devuelve el saldo del usuario logeado, se debe enviar el header { 'Autorization': `Bearer ${JWT recibido al hacer el login}`} 
+
   ### GET /api/transactions?id=...
   query id de usuario + headers: { 'Autorization': 'Bearer ${JWT recibido al hacer el login}'} **devuelve** un JSON con todas las transacciones del usuario.
 
