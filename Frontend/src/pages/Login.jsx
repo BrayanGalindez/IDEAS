@@ -2,7 +2,7 @@ import logo from "../assets/logo.png";
 import { useState } from "react";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-
+import {Link} from "react-router-dom";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -40,9 +40,11 @@ const Login = () => {
               )}
             </div>
           </div>
+          <Link to="/balance">
           <button className=" font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full">
             Continuar
           </button>
+          </Link>
           <p className="text-gray-600 font-[Open Sans] text-sm mt-4">
             Al continuar, confirmo que he leído y acepto los{" "}
             <span className="text-color-terms font-[Open Sans] cursor-pointer">

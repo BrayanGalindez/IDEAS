@@ -42,7 +42,7 @@ const ConfirmTransfer = ({ selectedCard, amount, recipient, onConfirm }) => {
             maxLength="19" // Limitar la longitud máxima del input
           />
         </div>
-        <Link to="/finalizada">
+        <Link to="/completed">
           <button className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded">
             Confirmar Transacción
           </button>

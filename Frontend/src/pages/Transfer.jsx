@@ -19,7 +19,7 @@ function Transfer() {
     console.log("Monto:", amount);
     console.log("Destinatario:", recipient);
     // Navegar a la página de confirmación
-    navigate("/confirmacion");
+    navigate("/confirm");
   };
   const handleAmountChange = (e) => {
     // Remover todos los caracteres no numéricos del valor ingresado

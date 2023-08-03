@@ -6,7 +6,7 @@ function ClosedSession() {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
     <img className="h-20 mx-auto mb-4" src={logo} alt="Logo" />
-    <h1 className="text-3xl font-[Open Sans] text-center">
+    <h1 className="text-3xl font-bold text-center">
       Saint Patrick
     </h1>
     <div className="bg-white p-6 rounded shadow-md max-w-sm mt-4">

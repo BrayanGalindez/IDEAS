@@ -1,9 +1,9 @@
+import { Link } from "react-router-dom";
 import avatar from "../assets/avatar.png";
 import userData from "./dataBalance/databalance.json";
 function Balance() {
-  
   return (
-    <div className="flex flex-col items-center justify-center p-4 border border-red-500  min-h-screen">
+    <div className="flex flex-col items-center justify-center p-4 min-h-screen">
       <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
         {/* Div que contiene la imagen y la bienvenida a la izquierda */}
         <div className="mb-4 flex items-center">
@@ -30,9 +30,11 @@ function Balance() {
 
         {/* Div que contiene el botón debajo del saldo */}
         <div>
-          <button className="bg-color-button hover:bg-color-button-hover text-black px-4 py-2 rounded mt-4">
-            Historial de transacciones
-          </button>
+          <Link to="/history">
+            <button className="bg-color-button hover:bg-color-button-hover text-black px-4 py-2 rounded mt-4">
+              Historial de transacciones
+            </button>
+          </Link>
         </div>
       </div>
     </div>

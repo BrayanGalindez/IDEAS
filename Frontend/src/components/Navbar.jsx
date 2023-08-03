@@ -13,7 +13,7 @@ function Navbar() {
         </a>
       </li>
       <li className="mx-4 my-6 md:my-0">
-        <a className="text-xl font-[Open Sans] text-white hover:text-color-button  duration-500 cursor-pointer"  onClick={() => navigate('/historial2')}>
+        <a className="text-xl font-[Open Sans] text-white hover:text-color-button  duration-500 cursor-pointer"  onClick={() => navigate('/history')}>
           Historial
         </a>
       </li>
@@ -23,7 +23,7 @@ function Navbar() {
         </a>
       </li>
       <li className="mx-4 my-6 md:my-0">
-        <a className="text-xl font-[Open Sans] text-white hover:text-color-button  duration-500 cursor-pointer"  onClick={() => navigate('/cerrar')}  >
+        <a className="text-xl font-[Open Sans] text-white hover:text-color-button  duration-500 cursor-pointer"  onClick={() => navigate('/closed')}  >
           Cerrar sesion
         </a>
       </li>

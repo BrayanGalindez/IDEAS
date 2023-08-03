@@ -38,7 +38,7 @@ function CompletedTransaction() {
           </Link>
         </div>
         <div className="w-full">
-          <Link to="/cerrar">
+          <Link to="/closed">
             <button className="w-full bg-color-button hover:bg-color-button-hover text-white font-semibold px-4 py-2 rounded my-4">
               Cerrar sesión
             </button>
