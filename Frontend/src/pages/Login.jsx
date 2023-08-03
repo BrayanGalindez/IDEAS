@@ -11,10 +11,10 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-10">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
         <img className="h-20 mx-auto" src={logo} alt="Logo" />
-        <h1 className="text-3xl font-[Open Sans] text-center mt-4">
+        <h1 className="text-3xl font-bold text-center mt-4">
           Saint Patrick
         </h1>
         <form className="mt-6">
@@ -40,7 +40,7 @@ const Login = () => {
               )}
             </div>
           </div>
-          <button className="text-white bg-color-theme-hover hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full">
+          <button className=" font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full">
             Continuar
           </button>
           <p className="text-gray-600 font-[Open Sans] text-sm mt-4">

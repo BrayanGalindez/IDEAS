@@ -3,7 +3,7 @@ import userData from "./dataBalance/databalance.json";
 function Balance() {
   
   return (
-    <div className="flex flex-col items-center p-4 mb-72 mt-20">
+    <div className="flex flex-col items-center justify-center p-4 border border-red-500  min-h-screen">
       <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
         {/* Div que contiene la imagen y la bienvenida a la izquierda */}
         <div className="mb-4 flex items-center">
@@ -30,7 +30,7 @@ function Balance() {
 
         {/* Div que contiene el botón debajo del saldo */}
         <div>
-          <button className="bg-color-theme-hover hover:bg-color-button-hover text-white px-4 py-2 rounded mt-4">
+          <button className="bg-color-button hover:bg-color-button-hover text-black px-4 py-2 rounded mt-4">
             Historial de transacciones
           </button>
         </div>

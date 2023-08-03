@@ -94,9 +94,9 @@ function Transfer() {
   };
 
   return (
-    <div className="flex flex-col items-center mt-10 mb-40">
-      <h1 className="text-3xl font-[Open Sans] mb-4">Nueva transacción</h1>
-      <div className="flex justify-center space-x-6 mb-6">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-3xl font-bold mb-4">Nueva transacción</h1>
+      <div className="flex flex-wrap justify-center space-x-4 mb-6">
         {/* Tarjeta 1 */}
         <div
           className={`p-4 rounded border ${
@@ -119,7 +119,7 @@ function Transfer() {
       </div>
 
       {/* Formulario de transferencia */}
-      <form className="flex flex-col ">
+      <form className="flex flex-col w-full max-w-sm">
         <div className="mb-4 flex flex-col">
           <label className="text-xl font-[Open Sans] mb-2">Monto:</label>
           <input
@@ -143,7 +143,7 @@ function Transfer() {
           />
         </div>
         <button
-          className="w-full bg-color-theme-hover hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
+          className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
           onClick={handleTransfer}
         >
           Transferir

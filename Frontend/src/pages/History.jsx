@@ -25,8 +25,8 @@ function History() {
   };
 
   return (
-    <div className="mt-10  mb-72">
-      <h1 className="text-3xl font-[Open Sans] text-center mb-6">
+    <div className="mt-10  mb-10">
+      <h1 className="text-3xl font-bold text-center mb-6">
         Historial de transacciones
       </h1>
       <table className="w-full table-fixed">

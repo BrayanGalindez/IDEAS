@@ -7,10 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        'color-theme': '#09595A',
-        'color-theme-hover': '#F7C345',
+        'color-bg': '#09595A',
+        'color-button': '#F5B00A',
+        'color-button-hover' : '#D39E1E',
         'color-terms' : '#0448F8',
-        'color-button-hover' : '#F5B00A'
+        
       },
     },
   },
