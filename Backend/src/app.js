@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const treblle = require('@treblle/express') // Creates API documentation
 
 const { staticFiles, port, treblleApiKey, treblleProjectId } = require('./config/environment')
@@ -10,6 +11,7 @@ const app = express()
 // ---------------------- MIDDLEWARES
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors())
 app.use(
   treblle({
     apiKey: treblleApiKey,
