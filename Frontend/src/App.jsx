@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Balance from "./pages/Balance";
 import History2 from "./pages/History2";
+import History from "./pages/History";
 import Transfer from "./pages/Transfer";
 import ConfirmTransfer from "./pages/ConfirmTransfer";
 import Footer from "./components/Footer";

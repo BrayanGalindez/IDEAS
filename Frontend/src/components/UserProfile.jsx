@@ -2,7 +2,7 @@ import CreditCard from "./CreditCard/CreditCard";
 import CreditCardPremium from "./CreditCard/CreditCardPremium";
 import datatransfer from "../pages/dataTransfer/datatransfer.json";
 
-const UserProfile = ({ card }) => {
+const UserProfile = ({ card, selected }) => {
   const cardData = datatransfer[card];
 
   if (!cardData) {
@@ -21,6 +21,7 @@ const UserProfile = ({ card }) => {
           cardNumber={cardData.cardNumber}
           cardHolder={cardData.cardHolder}
           expirationDate={cardData.expirationDate}
+          selected={selected}
         />
       )}
 
@@ -30,6 +31,7 @@ const UserProfile = ({ card }) => {
           cardNumber={cardData.cardNumber}
           cardHolder={cardData.cardHolder}
           expirationDate={cardData.expirationDate}
+          selected={selected}
         />
       )}
     </div>
