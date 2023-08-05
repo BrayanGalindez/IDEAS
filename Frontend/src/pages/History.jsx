@@ -5,17 +5,16 @@ import axios from "axios"; // Importa la librería Axios
 
 const API = "https://ideas-backend.vercel.app/api/"; // Nombre de la Api
 
-//Creo 3 variables para los datos del localStorage
-const data = localStorage.getItem('userData'); 
-const userData = JSON.parse(data)
-const token = localStorage.getItem('jwtToken');
-
 function History() {
 
   const [transaction, setTransaction] = useState([])
 
   //Creo una funcion para traer el historial de transacciones del usuario
   const getHistory = () => {
+    //Creo 3 variables para los datos del localStorage
+    const data = localStorage.getItem('userData'); 
+    const userData = JSON.parse(data)
+    const token = localStorage.getItem('jwtToken');
       axios.get(`${API}transactions?id=${userData.id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -37,7 +36,6 @@ function History() {
     getHistory();
   }, []);
 
-  console.log(transaction);
 
   const renderStatusIconAndMessage = (status) => {
     switch (status) {
