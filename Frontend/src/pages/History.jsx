@@ -1,20 +1,57 @@
 import { FaCheckCircle, FaTimesCircle, FaCircle } from "react-icons/fa";
-import datahistory from "./dataHistory/datahistory.json";
+import { useEffect, useState } from 'react'
+//import datahistory from "./dataHistory/datahistory.json";
+import axios from "axios"; // Importa la librería Axios
+
+const API = "https://ideas-backend.vercel.app/api/"; // Nombre de la Api
+
+//Creo 3 variables para los datos del localStorage
+const data = localStorage.getItem('userData'); 
+const userData = JSON.parse(data)
+const token = localStorage.getItem('jwtToken');
+
 function History() {
-  
+
+  const [transaction, setTransaction] = useState([])
+
+  //Creo una funcion para traer el historial de transacciones del usuario
+  const getHistory = () => {
+      axios.get(`${API}transactions?id=${userData.id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+          .then(response => {
+            if(response.status == 200){
+              setTransaction(response.data);
+            }else{
+              console.error("Error: No se encontraron datos de la transaccion ");
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+      });
+  }
+
+  useEffect(() => {
+    getHistory();
+  }, []);
+
+  console.log(transaction);
+
   const renderStatusIconAndMessage = (status) => {
     switch (status) {
-      case "realizada":
+      case "Realizada":
         return {
           icon: <FaCheckCircle className="text-green-500" />,
           message: "Realizada",
         };
-      case "recibida":
+      case "Recibida":
         return {
           icon: <FaCircle className="text-blue-500" />,
           message: "Recibida",
         };
-      case "fallada":
+      case "Fallada":
         return {
           icon: <FaTimesCircle className="text-red-500" />,
           message: "Fallada",
@@ -39,15 +76,15 @@ function History() {
           </tr>
         </thead>
         <tbody>
-          {datahistory.map((transaction) => (
+          {transaction.map((transaction) => (
             <tr key={transaction.id}>
-              <td className="border px-4 py-3">{transaction.date}</td>
-              <td className="border px-4 py-3">{transaction.source}</td>
-              <td className="border px-4 py-3">${transaction.total}</td>
+              <td className="border px-4 py-3">{transaction.fecha}</td>
+              <td className="border px-4 py-3">{transaction.tarjeta_origen}</td>
+              <td className="border px-4 py-3">${transaction.monto}</td>
               <td className="border px-4 py-3 flex items-center">
-                {renderStatusIconAndMessage(transaction.status).icon}
+                {renderStatusIconAndMessage(transaction.descripcion).icon}
                 <span className="ml-2">
-                  {renderStatusIconAndMessage(transaction.status).message}
+                  {renderStatusIconAndMessage(transaction.descripcion).message}
                 </span>
               </td>
             </tr>

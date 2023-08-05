@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/balance" element={<Balance />} />
-            <Route path="/history" element={<History2 />} />
+            <Route path="/history" element={<History />} />
             <Route path="/transfer" element={<Transfer />} />
             <Route path="/confirm" element={<ConfirmTransfer/>} />
             <Route path="/closed" element={<ClosedSession/>} />
