@@ -90,9 +90,11 @@ exports.postUserTransaction = async (req, res) => {
     // Si la transaccion fue exitosa, actualizo el saldo de los usuarios.
     const userBalanceResponse = await UsersObject.changeUserBalance(userId, -req.body.monto)
     const userRecipientBalanceResponse = await UsersObject.changeUserBalance(req.body.destino_usuario_id, req.body.monto)
+    const saldo = await UsersObject.getUserBalance(userId)
     if (userBalanceResponse === 1 && userRecipientBalanceResponse === 1) {
       res.status(200).json({
-        message: 'Transaccion realizada con exito.'
+        message: 'Transaccion realizada con exito.',
+        saldo
       })
     } else {
       // La transaccion se realizo pero alguno de los saldos de los usuarios no pudo ser actualizado.
