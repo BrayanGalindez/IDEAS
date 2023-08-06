@@ -64,7 +64,7 @@ function Balance() {
           <input
             className="text-center w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
             type="text"
-            value={"$" + saldo} // Asigna el valor del estado al campo de entrada
+            value={saldo} // Asigna el valor del estado al campo de entrada
             readOnly
           />
         </div>

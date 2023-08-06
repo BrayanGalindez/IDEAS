@@ -2,9 +2,7 @@ import { useState } from "react";
 
 const UseTransferForm = () => {
   const [amount, setAmount] = useState("");
-
   const [formattedRecipient, setFormattedRecipient] = useState(""); // Estado para mostrar el valor formateado en el input
-
   const [recipient, setRecipient] = useState("");
 
   const handleAmountChange = (e) => {
@@ -57,6 +55,9 @@ const UseTransferForm = () => {
       formattedValue += value[i];
     }
 
+    // Actualizar el estado del destinatario sin guiones
+    setRecipient(value);
+
     // Actualizar el estado de formattedRecipient para mostrar los guiones en el input
     setFormattedRecipient(formattedValue);
   };
@@ -70,7 +71,8 @@ const UseTransferForm = () => {
         e.key === "Delete" || // Suprimir
         e.key === "ArrowLeft" || // Flecha izquierda
         e.key === "ArrowRight" || // Flecha derecha
-        e.key === "-"
+        e.key === "-" || // Guion
+        e.key === "v" && (e.metaKey || e.ctrlKey) // Pegar (Ctrl + v o Command + v)
       ) // Guion
     ) {
       e.preventDefault();
