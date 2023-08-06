@@ -2,9 +2,8 @@ import { useState } from "react";
 
 const UseTransferForm = () => {
   const [amount, setAmount] = useState("");
-
+  const [formattedAmount, setFormattedAmount] = useState("");
   const [formattedRecipient, setFormattedRecipient] = useState(""); // Estado para mostrar el valor formateado en el input
-
   const [recipient, setRecipient] = useState("");
 
   const handleAmountChange = (e) => {
@@ -21,11 +20,13 @@ const UseTransferForm = () => {
     }
 
     // Limitar el monto máximo a 5.000.000
-    if (value > 5000000) {
+    const maxValue = 5000000;
+    if (value > maxValue) {
       formattedValue = "5.000.000";
     }
 
-    setAmount(formattedValue);
+    setAmount(value); // Actualizar el valor numérico sin formato
+    setFormattedAmount(formattedValue); // Actualizar el valor formateado
   };
 
   const handleAmountKeyDown = (e) => {
@@ -57,6 +58,9 @@ const UseTransferForm = () => {
       formattedValue += value[i];
     }
 
+    // Actualizar el estado del destinatario sin guiones
+    setRecipient(value);
+
     // Actualizar el estado de formattedRecipient para mostrar los guiones en el input
     setFormattedRecipient(formattedValue);
   };
@@ -65,12 +69,15 @@ const UseTransferForm = () => {
     // Permitir solo ingresar números y guiones
     if (
       !(
-        (e.key >= "0" && e.key <= "9") || // Números
-        e.key === "Backspace" || // Retroceso
-        e.key === "Delete" || // Suprimir
-        e.key === "ArrowLeft" || // Flecha izquierda
-        e.key === "ArrowRight" || // Flecha derecha
-        e.key === "-"
+        (
+          (e.key >= "0" && e.key <= "9") || // Números
+          e.key === "Backspace" || // Retroceso
+          e.key === "Delete" || // Suprimir
+          e.key === "ArrowLeft" || // Flecha izquierda
+          e.key === "ArrowRight" || // Flecha derecha
+          e.key === "-" || // Guion
+          (e.key === "v" && (e.metaKey || e.ctrlKey))
+        ) // Pegar (Ctrl + v o Command + v)
       ) // Guion
     ) {
       e.preventDefault();
@@ -81,6 +88,7 @@ const UseTransferForm = () => {
     amount,
     recipient,
     formattedRecipient,
+    formattedAmount,
     handleAmountChange,
     handleAmountKeyDown,
     handleRecipientChange,

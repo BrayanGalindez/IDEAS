@@ -1,39 +1,43 @@
 import CreditCard from "./CreditCard/CreditCard";
 import CreditCardPremium from "./CreditCard/CreditCardPremium";
-import datatransfer from "../pages/dataTransfer/datatransfer.json";
+// import datatransfer from "../pages/dataTransfer/datatransfer.json";
 
-const UserProfile = ({ card, selected }) => {
-  const cardData = datatransfer[card];
+const UserProfile = ({
+  card,
+  selectedCard, // Asegúrate de pasar selectedCard como una prop
+  nombre,
+  numerosDeTarjetas,
+  apellido,
+  handleCardSelect, // Asegúrate de pasar handleCardSelect como una prop
+}) => {
+  const cardData = numerosDeTarjetas.find(
+    (tarjeta) => tarjeta.cardNumber === card
+  );
 
   if (!cardData) {
     return <div>Error: Tarjeta no encontrada</div>;
   }
 
-  // Comprobamos si el usuario tiene la tarjeta normal y/o premium
-  const hasNormalCard = card === "card1"; // Cambiar "card1" por el nombre de clave correspondiente en tu JSON
-  const hasPremiumCard = card === "card2"; // Cambiar "card2" por el nombre de clave correspondiente en tu JSON
-
   return (
     <div>
-      {/* Renderizamos la tarjeta de crédito normal si el usuario tiene la tarjeta normal */}
-      {hasNormalCard && (
+      {card === numerosDeTarjetas[0].cardNumber && (
         <CreditCard
-          cardNumber={cardData.cardNumber}
-          cardHolder={cardData.cardHolder}
-          expirationDate={cardData.expirationDate}
-          selected={selected}
+          cardNumber={card}
+          cardHolder={nombre + " " + apellido}
+          expirationDate="06/24"
+          selected={selectedCard === card}
         />
       )}
 
-      {/* Renderizamos la tarjeta de crédito premium si el usuario tiene la tarjeta premium */}
-      {hasPremiumCard && (
-        <CreditCardPremium
-          cardNumber={cardData.cardNumber}
-          cardHolder={cardData.cardHolder}
-          expirationDate={cardData.expirationDate}
-          selected={selected}
-        />
-      )}
+      {numerosDeTarjetas.length === 2 &&
+        card === numerosDeTarjetas[1].cardNumber && (
+          <CreditCardPremium
+            cardNumber={card}
+            cardHolder={nombre + " " + apellido}
+            expirationDate="06/24"
+            selected={selectedCard === card}
+          />
+        )}
     </div>
   );
 };
