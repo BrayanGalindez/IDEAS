@@ -5,8 +5,8 @@ import { useLocation } from "react-router-dom";
 function CompletedTransaction() {
   const location = useLocation();
   const { amount, formattedRecipient } = location.state;
-  console.log("Monto:", amount);
-  console.log("Destinatario:", formattedRecipient);
+  // console.log("Monto:", amount);
+  // console.log("Destinatario:", formattedRecipient);
   return (
     <div className="flex justify-center items-center h-screen flex-col bg-color-bg">
       <div className=" bg-color-bg p-6 rounded shadow-md max-w-sm">

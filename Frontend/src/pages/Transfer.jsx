@@ -25,6 +25,7 @@ function Transfer() {
     amount,
     recipient,
     formattedRecipient,
+    formattedAmount,
     handleAmountChange,
     handleAmountKeyDown,
     handleRecipientChange,
@@ -46,6 +47,7 @@ function Transfer() {
         selectedCard,
         amount,
         formattedRecipient,
+        formattedAmount,
         numerosDeTarjetas,
         nombre,
         apellido,
@@ -86,7 +88,7 @@ function Transfer() {
           <input
             className="w-full px-4 py-2 border rounded focus:outline-none focus:border-indigo-500"
             type="text"
-            value={amount}
+            value={formattedAmount}
             onChange={handleAmountChange}
             onKeyDown={handleAmountKeyDown}
             placeholder="0" // Mostrar un cero en el campo si está vacío
@@ -111,6 +113,7 @@ function Transfer() {
           />
         </div>
         <button
+          type="button"
           className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
           onClick={handleTransfer}
         >

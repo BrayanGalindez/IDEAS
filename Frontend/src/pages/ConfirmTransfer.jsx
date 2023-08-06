@@ -14,6 +14,7 @@ const ConfirmTransfer = () => {
     selectedCard,
     amount,
     formattedRecipient,
+    formattedAmount,
     numerosDeTarjetas,
     nombre,
     apellido,
@@ -33,12 +34,11 @@ const ConfirmTransfer = () => {
         console.error("Error: Datos de transferencia no cargados");
         return;
       }
-
       // Realizar la solicitud POST al backend con los datos necesarios
       const response = await axios.post(
         "https://ideas-backend.vercel.app/api/transactions",
         {
-          monto: transferData.amount,
+          monto: transferData.amount, // Convertir a número
           tarjeta_origen: transferData.selectedCard,
           tarjeta_destino: transferData.recipient,
         },
@@ -92,7 +92,7 @@ const ConfirmTransfer = () => {
           <input
             className="w-full px-4 py-2 border rounded focus:outline-none focus:border-indigo-500"
             type="text"
-            value={amount}
+            value={formattedAmount}
             readOnly // Hacer el campo de destinatario de solo lectura
           />
         </div>
@@ -101,12 +101,12 @@ const ConfirmTransfer = () => {
           <input
             className="w-full px-4 py-2 border rounded focus:outline-none focus:border-indigo-500"
             type="text"
-            value={formattedRecipient} // Usar "value" para mostrar el valor formateado
+            value={formattedRecipient} // Usar "formattedRecipient" para mostrar el valor formateado
             readOnly // Hacer el campo de destinatario de solo lectura
           />
         </div>
         <button
-        type="button"
+          type="button"
           className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
           onClick={handleTransfer}
         >
