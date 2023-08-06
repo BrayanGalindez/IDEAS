@@ -58,7 +58,7 @@ exports.postUserTransaction = async (req, res) => {
     }
 
     // Tiene saldo suficiente?
-    const userBalance = await UsersObject.userBalance(userId)
+    const userBalance = await UsersObject.getUserBalance(userId)
     if (userBalance < req.body.monto) {
       return res.status(400).json({
         message: 'No tiene saldo suficiente.'
