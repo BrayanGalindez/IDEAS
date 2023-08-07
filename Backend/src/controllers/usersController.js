@@ -2,9 +2,6 @@ const { UsersObject } = require('../dao/usersDao')
 const { CardsObject } = require('../dao/cardsDao')
 const { generateJwtToken } = require('../middlewares/auth')
 
-const bcrypt = require('bcrypt')
-const saltRounds = 8
-
 exports.userLogin = async (req, res) => {
   try {
     const userId = await CardsObject.getUserIdByCardNumber(req.body.cardNumber)
@@ -20,7 +17,7 @@ exports.userLogin = async (req, res) => {
       })
     }
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({ error })
   }
 }
 
@@ -30,29 +27,11 @@ exports.getUserBalance = async (req, res) => {
     res.status(200).json(response)
   } catch (error) {
     console.log(error)
-    res.status(500).json(error)
+    res.status(500).json({ error })
   }
 }
 
 // ---------------------- para desarrollo
-exports.newUser = async (req, res) => {
-  try {
-    req.body.pin = bcrypt.hashSync(req.body.pin, saltRounds) // Encriptar PIN
-    const response = await UsersObject.newUser(req.body)
-    if (response === 1) {
-      res.status(200).json({
-        message: 'Usuario creado con exito'
-      })
-    } else {
-      res.status(400).json({
-        message: 'Error al crear el usuario'
-      })
-    }
-  } catch (error) {
-    res.status(500).json(error)
-  }
-}
-
 exports.getUserByCardNumber = async (req, res) => {
   try {
     const response = await UsersObject.getUserByCardNumber(req.params.cardNumber)

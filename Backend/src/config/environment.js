@@ -4,6 +4,7 @@ module.exports.staticFiles = process.env.STATICFILES
 module.exports.port = process.env.PORT
 
 module.exports.jwtsecretkey = process.env.JWTSECRETKEY
+module.exports.jwtsecretadminkey = process.env.JWTSECRETADMINKEY
 module.exports.jwtexpires = process.env.JWTEXPIRES
 
 module.exports.postgresuser = process.env.POSTGRESUSER

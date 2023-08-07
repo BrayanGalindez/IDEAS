@@ -1,3 +1,4 @@
+const creditCardGenerator = require('creditcard-generator')
 const { client, connectToDb } = require('../config/postgreConection')
 
 class Cards {
@@ -29,9 +30,24 @@ class Cards {
 
   async getCardsNumberByUserId (userId) {
     await this.connectToDb()
-    const selectQuery = 'SELECT numero_tarjeta FROM ideacards WHERE usuario_id = $1'
-    const response = await this.client.query(selectQuery, [userId])
+    const selectQuery = 'SELECT numero_tarjeta FROM ideacards WHERE usuario_id = $1 AND activo = $2'
+    const response = await this.client.query(selectQuery, [userId, true])
     return response.rowCount > 0 ? response.rows : null
+  }
+
+  async newCard (userId) {
+    await this.connectToDb()
+    const cardNumber = await creditCardGenerator.GenCC('VISA')[0].toString()
+    const insertQuery = 'INSERT INTO ideacards (usuario_id, numero_tarjeta) VALUES ($1, $2)'
+    const response = await this.client.query(insertQuery, [userId, cardNumber])
+    return { count: response.rowCount, cardNumber }
+  }
+
+  async deleteCard (cardId) {
+    await this.connectToDb()
+    const updateQuery = 'UPDATE ideacards SET activo = $1 WHERE id = $2'
+    const response = await this.client.query(updateQuery, [false, cardId])
+    return response.rowCount
   }
 }
 

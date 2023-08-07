@@ -38,14 +38,28 @@ class Users {
     return response.rows[0]
   }
 
-  // ---------------------- Para desarrollo
   async newUser (data) {
     await this.connectToDb()
-    const insertQuery = 'INSERT INTO ideausers (nombre, apellido, pin, saldo, activo) VALUES ($1, $2, $3, $4, $5)'
-    const response = await this.client.query(insertQuery, [data.nombre, data.apellido, data.pin, data.saldo, true])
+    const insertQuery = 'INSERT INTO ideausers (nombre, apellido, pin, saldo, picture, activo) VALUES ($1, $2, $3, $4, $5, $6)'
+    const response = await this.client.query(insertQuery, [data.nombre, data.apellido, data.pin, data.saldo, data.picture, true])
     return response.rowCount
   }
 
+  async updateUser (data) {
+    await this.connectToDb()
+    const updateQuery = 'UPDATE ideausers SET nombre = $1, apellido = $2, pin = $3, saldo = $4, picture = $5 WHERE id = $6'
+    const response = await this.client.query(updateQuery, [data.nombre, data.apellido, data.pin, data.saldo, data.picture, data.id])
+    return response.rowCount
+  }
+
+  async deleteUser (id) {
+    await this.connectToDb()
+    const updateQuery = 'UPDATE ideausers SET activo = $1 WHERE id = $2'
+    const response = await this.client.query(updateQuery, [false, id])
+    return response.rowCount
+  }
+
+  // ---------------------- Para desarrollo
   async getUsers () {
     await this.connectToDb()
     const selectQuery = 'SELECT * FROM ideausers'
