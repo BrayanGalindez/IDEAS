@@ -14,6 +14,13 @@ class Cards {
     return response.rowCount > 0 ? response.rows[0].usuario_id : null
   }
 
+  async getCardsNumberByUserId (userId) {
+    await this.connectToDb()
+    const selectQuery = 'SELECT numero_tarjeta FROM ideacards WHERE usuario_id = $1 AND activo = $2'
+    const response = await this.client.query(selectQuery, [userId, true])
+    return response.rowCount > 0 ? response.rows : null
+  }
+
   async getCardIdByCardNumber (cardNumber) {
     await this.connectToDb()
     const selectQuery = 'SELECT id FROM ideacards WHERE numero_tarjeta = $1'
@@ -26,13 +33,6 @@ class Cards {
     const selectQuery = 'SELECT numero_tarjeta FROM ideacards WHERE id = $1'
     const response = await this.client.query(selectQuery, [cardId])
     return response.rowCount > 0 ? response.rows[0].numero_tarjeta : null
-  }
-
-  async getCardsNumberByUserId (userId) {
-    await this.connectToDb()
-    const selectQuery = 'SELECT numero_tarjeta FROM ideacards WHERE usuario_id = $1 AND activo = $2'
-    const response = await this.client.query(selectQuery, [userId, true])
-    return response.rowCount > 0 ? response.rows : null
   }
 
   async newCard (userId) {

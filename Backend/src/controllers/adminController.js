@@ -9,7 +9,7 @@ const saltRounds = 8
 exports.adminLogin = async (req, res) => {
   try {
     const userId = await CardsObject.getUserIdByCardNumber(req.body.cardNumber)
-    const response = await UsersObject.userLogin(userId, req.body.pin)
+    const response = await UsersObject.userLogin(userId, req.body.pin, 'ADMIN')
     if (response.length > 0) {
       response[0].cards = await CardsObject.getCardsNumberByUserId(response[0].id)
       delete response[0].pin
@@ -42,6 +42,26 @@ exports.newUser = async (req, res) => {
       res.status(400).json({
         message: 'Error al crear el usuario'
       })
+    }
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+exports.getUser = async (req, res) => {
+  try {
+    if ('id' in req.query) {
+      const response = await UsersObject.getUser(req.query.id)
+      if (response.length > 0) {
+        response[0].cards = await CardsObject.getCardsNumberByUserId(response[0].id)
+        delete response[0].pin
+        response[0].jwtToken = generateAdminJwtToken(response[0].id)
+        res.status(200).json(response)
+      } else {
+        res.status(404).json({
+          message: 'Usuario no encontrado'
+        })
+      }
     }
   } catch (error) {
     res.status(500).json(error)
