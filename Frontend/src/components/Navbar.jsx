@@ -15,19 +15,19 @@ function Navbar() {
   let [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="top-0 left-0 right-0 z-50 p-5 bg-color-bg shadow-md w-full fixed">
+    <nav className="top-0 left-0 right-0 z-50 p-4 sm:p-1 md:p-5 bg-color-bg shadow-md w-full fixed">
       <div className="sm:flex items-center lg:mx-[150px] md:mx-6 sm:mx-3">
         <img
-          className="lg:h-16 h-10 cursor-pointer"
+          className="sm:h-12 md:h-13 lg:h-13 h-10 cursor-pointer"
           src={logo}
           alt="Logo"
           onClick={() => navigate("/")}
         />
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className="w-10 h-10 items-center justify-center flex text-white absolute right-8 top-6 cursor-pointer sm:hidden"
+          className="w-10 h-10 items-center justify-center flex text-white absolute right-4 top-4 cursor-pointer sm:hidden"
         >
-          <FaBars />
+          <FaBars className="text-[1.5em]" />
         </div>
 
         {userData && (
@@ -37,7 +37,7 @@ function Navbar() {
           >
             <li className="mx-4 my-6 md:my-0">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer "
+                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer "
                 onClick={() => navigate("/balance")}
               >
                 Saldo
@@ -45,7 +45,7 @@ function Navbar() {
             </li>
             <li className="mx-4 my-6 md:my-0">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
+                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
                 onClick={() => navigate("/history")}
               >
                 Historial
@@ -53,7 +53,7 @@ function Navbar() {
             </li>
             <li className="mx-4 my-6 md:my-0">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
+                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
                 onClick={() => navigate("/transfer")}
               >
                 Transferir
@@ -61,7 +61,7 @@ function Navbar() {
             </li>
             <li className="mx-4 my-6 md:my-0">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
+                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
                 onClick={handleClearAndReload}
               >
                 Cerrar sesion
