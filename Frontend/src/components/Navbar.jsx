@@ -1,18 +1,32 @@
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SesionContext } from "../context/SesionContext";
 function Navbar() {
+  const { sesionData } = useContext(SesionContext);
+  const sesion = Boolean(sesionData?.token)
+  const [sesionActive, setSesionActive] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+
   const navigate = useNavigate();
   const data = localStorage.getItem("userData");
   const userData = JSON.parse(data);
-  const handleClearAndReload = async () => {
-    await navigate("/closed");
-    localStorage.clear();
-    window.location.reload();
+
+  const handleClear =  () => {
+    window.localStorage.clear();
+    setSesionActive(!sesionActive)
+    return navigate("/closed");
   };
 
-  let [isOpen, setIsOpen] = useState(false);
+  const handleNavigation = () => {
+    if(sesionActive === true) {
+      return navigate("/")
+    }
+    if (sesion === true) {
+      return navigate("/balance")
+    }
+  }
 
   return (
     <nav className="top-0 left-0 right-0 z-50 p-4 sm:p-1 md:p-5 bg-color-bg shadow-md w-full fixed">
@@ -21,7 +35,7 @@ function Navbar() {
           className="sm:h-12 md:h-13 lg:h-13 h-10 cursor-pointer"
           src={logo}
           alt="Logo"
-          onClick={() => navigate("/")}
+          onClick={handleNavigation}
         />
         <div
           onClick={() => setIsOpen(!isOpen)}
@@ -62,7 +76,7 @@ function Navbar() {
             <li className="mx-4 my-6 md:my-0">
               <a
                 className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
-                onClick={handleClearAndReload}
+                onClick={handleClear}
               >
                 Cerrar sesion
               </a>

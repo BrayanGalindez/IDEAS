@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import UserProfile from "../components/UserProfile";
 import UseTransferForm from "../components/UseTransferForm";
 function Transfer() {
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
   const [numerosDeTarjetas, setNumerosDeTarjetas] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ function Transfer() {
     const userData = JSON.parse(localStorage.getItem("userData"));
 
     if (userData) {
-      setNombre(userData.nombre);
-      setApellido(userData.apellido);
+      setName(userData.nombre);
+      setLastname(userData.apellido);
       const numerosTarjetas = userData.cards.map((tarjeta) => ({
         cardNumber: tarjeta.numero_tarjeta,
       }));
@@ -37,10 +37,6 @@ function Transfer() {
   };
 
   const handleTransfer = () => {
-    // console.log("Transferencia realizada:");
-    // console.log("Tarjeta seleccionada:", selectedCard);
-    // console.log("Monto:", amount);
-    // console.log("Destinatario:", recipient);
     navigate("/confirm", {
       state: {
         recipient,
@@ -49,15 +45,15 @@ function Transfer() {
         formattedRecipient,
         formattedAmount,
         numerosDeTarjetas,
-        nombre,
-        apellido,
+        name,
+        lastname,
       },
     });
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-3xl font-bold mb-4">Nueva transacción</h1>
+      <h1 className="text-3xl font-bold mt-[4.6rem] mb-4">Nueva transacción</h1>
       <div className="flex flex-wrap justify-center space-x-4 mb-6">
         {numerosDeTarjetas.map((tarjeta) => (
           <div
@@ -72,9 +68,9 @@ function Transfer() {
             <UserProfile
               card={tarjeta.cardNumber}
               selectedCard={selectedCard}
-              nombre={nombre}
+              nombre={name}
               numerosDeTarjetas={numerosDeTarjetas}
-              apellido={apellido}
+              apellido={lastname}
               handleCardSelect={handleCardSelect}
             />
           </div>
@@ -114,7 +110,7 @@ function Transfer() {
         </div>
         <button
           type="button"
-          className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
+          className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 mb-5 rounded"
           onClick={handleTransfer}
         >
           Transferir
