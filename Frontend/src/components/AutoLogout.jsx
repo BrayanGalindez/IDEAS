@@ -6,12 +6,9 @@ export const AutoLogout = ({ sessionTimeout }) => {
     const data = localStorage.getItem('userData'); 
     const userData = JSON.parse(data)
 
-
     useEffect(() => {
 
         let logoutTimer;
-
-        console.log(logoutTimer);
 
         //Funcion que llama a handleLogout y establece un tiempo para ejecutarla
         const resetTimer = () => {

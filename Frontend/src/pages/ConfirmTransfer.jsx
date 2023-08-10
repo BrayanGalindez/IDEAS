@@ -7,7 +7,6 @@ const ConfirmTransfer = () => {
   const location = useLocation();
   // Agregar estado para almacenar los datos cargados
   const [transferData, setTransferData] = useState(null);
-  // console.log("Location state:", location.state);
 
   const {
     recipient,
