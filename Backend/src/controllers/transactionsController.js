@@ -31,11 +31,11 @@ exports.getUserTransactions = async (req, res) => {
         for (let i = 0; i < response.length; i++) {
           if (response[i].origen_usuario_id === req.user) {
             response[i].descripcion = 'Realizada'
-            response[i].datos_usuario = { nombre: response[i].destino_nombre, apellido: response[i].destino_apellido }
-            response[i].tarjeta_destino = `${response[i].destino_nombre} ${response[i].destino_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
+            response[i].datos_usuario = `${response[i].destino_nombre} ${response[i].destino_apellido}`
+            response[i].tarjeta_origen = `${response[i].destino_nombre} ${response[i].destino_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
           } else {
             response[i].descripcion = 'Recibida'
-            response[i].datos_usuario = { nombre: response[i].origen_nombre, apellido: response[i].origen_apellido }
+            response[i].datos_usuario = `${response[i].origen_nombre} ${response[i].origen_apellido}`
             response[i].tarjeta_origen = `${response[i].origen_nombre} ${response[i].origen_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
           }
           
