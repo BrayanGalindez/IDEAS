@@ -10,8 +10,10 @@ exports.getUserTransactions = async (req, res) => {
           message: 'Usuario no autorizado.'
         })
       }
-      const response = await TransactionsObject.getUserTransactions(req.query.id)
+      const response = await TransactionsObject.getUserTransactionsSummary(req.query.id)
       if (response.length > 0) {
+        
+        /* ELIMINAMOS ESTA LOGICA YA QUE HACE DEMASIADAS CONSULTAS A LA BASE DE DATOS
         // En lugar de devolver los id de la tarjeta, devuelvo el numero
         for (let i = 0; i < response.length; i++) {
           const item = response[i]
@@ -24,7 +26,25 @@ exports.getUserTransactions = async (req, res) => {
             item.descripcion = 'Recibida'
             item.datos_usuario = await UsersObject.getUserNameById(item.origen_usuario_id)
           }
+        }*/
+
+        for (let i = 0; i < response.length; i++) {
+          if (response[i].origen_usuario_id === req.user) {
+            response[i].descripcion = 'Realizada'
+            response[i].datos_usuario = `${response[i].destino_nombre} ${response[i].destino_apellido}`
+            response[i].tarjeta_origen = `${response[i].destino_nombre} ${response[i].destino_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
+          } else {
+            response[i].descripcion = 'Recibida'
+            response[i].datos_usuario = `${response[i].origen_nombre} ${response[i].origen_apellido}`
+            response[i].tarjeta_origen = `${response[i].origen_nombre} ${response[i].origen_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
+          }
+          
+          delete response[i].destino_nombre
+          delete response[i].destino_apellido
+          delete response[i].origen_nombre
+          delete response[i].origen_apellido
         }
+
         res.status(200).json(response)
       } else {
         res.status(400).json({
