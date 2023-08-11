@@ -57,9 +57,11 @@ exports.postUserTransaction = async (req, res) => {
       })
     }
 
+    // Traigo los datos del usuario (nombre, apellido, saldo)
+    const origin_user = await UsersObject.getUserNameAndBalance(userId)
+    
     // Tiene saldo suficiente?
-    const userBalance = await UsersObject.getUserBalance(userId)
-    if (userBalance < req.body.monto) {
+    if (origin_user.saldo < req.body.monto) {
       return res.status(400).json({
         message: 'No tiene saldo suficiente.'
       })
@@ -73,14 +75,25 @@ exports.postUserTransaction = async (req, res) => {
       })
     }
 
+    // Traigo los datos del destinatario (nombre, apellido, saldo)
+    const recipient_user = await UsersObject.getUserNameAndBalance(userRecipientId)
+
     // La transaccion espera el id de tarjeta y no sus numeros.
     req.body.tarjeta_origen = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_origen)
     req.body.tarjeta_destino = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_destino)
-    req.body.destino_usuario_id = userRecipientId
-
+    
     // Hacer la transaccion
     // Primero intento registrar la transaccion
-    const transactionResponse = await TransactionsObject.postUserTransaction({ ...req.body, origen_usuario_id: userId })
+    const transactionResponse = await TransactionsObject.postUserTransaction({
+      ...req.body,
+      origen_usuario_id: userId,
+      origen_nombre: origin_user[0].nombre,
+      origen_apellido: origin_user[0].apellido,
+      destino_usuario_id: userRecipientId,
+      destino_nombre: recipient_user[0].nombre,
+      destino_apellido: recipient_user[0].apellido
+     })
+
     if (transactionResponse !== 1) {
       return res.status(400).json({
         message: 'Error al realizar la transaccion. Comuniquese con el banco.'
@@ -89,7 +102,7 @@ exports.postUserTransaction = async (req, res) => {
 
     // Si la transaccion fue exitosa, actualizo el saldo de los usuarios.
     const userBalanceResponse = await UsersObject.changeUserBalance(userId, -req.body.monto)
-    const userRecipientBalanceResponse = await UsersObject.changeUserBalance(req.body.destino_usuario_id, req.body.monto)
+    const userRecipientBalanceResponse = await UsersObject.changeUserBalance(userRecipientId, req.body.monto)
     const saldo = await UsersObject.getUserBalance(userId)
     if (userBalanceResponse === 1 && userRecipientBalanceResponse === 1) {
       res.status(200).json({

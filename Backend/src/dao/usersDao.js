@@ -17,6 +17,13 @@ class Users {
     return []
   }
 
+  async getUserNameAndBalance (id) {
+    await this.connectToDb()
+    const selectQuery = 'SELECT nombre, apellido, saldo FROM ideausers WHERE id = $1'
+    const response = await this.client.query(selectQuery, [id])
+    return response.rows
+  }
+
   async getUserBalance (id) {
     await this.connectToDb()
     const selectQuery = 'SELECT saldo FROM ideausers WHERE id = $1 AND activo = $2'
