@@ -32,6 +32,10 @@ CREATE TABLE IF NOT EXISTS ideausers (
   apellido VARCHAR(50),
   pin VARCHAR(50),
   saldo DECIMAL(10, 2),
+  email VARCHAR(100),
+  telefono VARCHAR(20),
+  picture VARCHAR(100),
+  role VARCHAR(50),
   activo BOOLEAN NOT NULL DEFAULT TRUE
 )`
 
@@ -40,6 +44,7 @@ CREATE TABLE IF NOT EXISTS ideacards (
   id SERIAL PRIMARY KEY,
   numero_tarjeta VARCHAR(16),
   usuario_id INTEGER,
+  tipo VARCHAR(50) DEFAULT 'green',
   activo BOOLEAN NOT NULL DEFAULT TRUE,
   FOREIGN KEY (usuario_id) REFERENCES ideausers(id)
 )`
@@ -49,8 +54,12 @@ CREATE TABLE IF NOT EXISTS ideatransactions (
   id SERIAL PRIMARY KEY,
   monto DECIMAL(10, 2),
   origen_usuario_id INTEGER,
+  origen_nombre VARCHAR(50),
+  origen_apellido VARCHAR(50),
   tarjeta_origen INTEGER,
   destino_usuario_id INTEGER,
+  destino_nombre VARCHAR(50),
+  destino_apellido VARCHAR(50),
   tarjeta_destino INTEGER,
   fecha TIMESTAMP,
   registrada BOOLEAN NOT NULL DEFAULT FALSE,

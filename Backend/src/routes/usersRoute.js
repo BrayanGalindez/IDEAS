@@ -20,13 +20,6 @@ usersRoute.get(
 )
 
 // ----------------------- para desarrollo
-usersRoute.post(
-  '/users',
-  async (req, res) => {
-    usersController.newUser(req, res)
-  }
-)
-
 usersRoute.get(
   '/users',
   async (req, res) => {
