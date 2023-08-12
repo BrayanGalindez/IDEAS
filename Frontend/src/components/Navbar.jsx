@@ -49,7 +49,7 @@ function Navbar() {
             className={`justify-end sm:flex justify-items-end sm:pb-0 absolute w-full sm:static left-0 transition-all ease-in duration-500 sm:z-auto z-[-1] bg-color-bg ${isOpen ? "top-12" : "top-[-430px]"
               }`}
           >
-            <li className="mx-4 my-6 md:my-0">
+            <li className="mx-11 my-6 md:my-0 text-right">
               <a
                 className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer "
                 onClick={() => navigate("/balance")}
@@ -57,7 +57,7 @@ function Navbar() {
                 Saldo
               </a>
             </li>
-            <li className="mx-4 my-6 md:my-0">
+            <li className="mx-11 my-6 md:my-0 text-right">
               <a
                 className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
                 onClick={() => navigate("/history")}
@@ -65,7 +65,7 @@ function Navbar() {
                 Historial
               </a>
             </li>
-            <li className="mx-4 my-6 md:my-0">
+            <li className="mx-11 my-6 md:my-0 text-right">
               <a
                 className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
                 onClick={() => navigate("/transfer")}
@@ -73,10 +73,12 @@ function Navbar() {
                 Transferir
               </a>
             </li>
-            <li className="mx-4 my-6 md:my-0">
+            <li className="mx-11 my-6 md:my-0 text-right">
               <a
-                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
-                onClick={handleClear}
+
+                className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-2 mt-10 w-80 block mx-auto "
+                onClick={handleClearAndReload}
+
               >
                 Cerrar sesion
               </a>
