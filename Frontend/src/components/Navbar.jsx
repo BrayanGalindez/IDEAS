@@ -1,33 +1,47 @@
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SesionContext } from "../context/SesionContext";
 function Navbar() {
+  const { sesionData } = useContext(SesionContext);
+  const sesion = Boolean(sesionData?.token)
+  const [sesionActive, setSesionActive] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+
   const navigate = useNavigate();
   const data = localStorage.getItem("userData");
   const userData = JSON.parse(data);
-  const handleClearAndReload = async () => {
-    await navigate("/closed");
-    localStorage.clear();
-    window.location.reload();
+
+  const handleClear =  () => {
+    window.localStorage.clear();
+    setSesionActive(!sesionActive)
+    return navigate("/closed");
   };
 
-  let [isOpen, setIsOpen] = useState(false);
+  const handleNavigation = () => {
+    if(sesionActive === true) {
+      return navigate("/")
+    }
+    if (sesion === true) {
+      return navigate("/balance")
+    }
+  }
 
   return (
-    <nav className="top-0 left-0 right-0 z-50 p-5 bg-color-bg shadow-md w-full fixed">
+    <nav className="top-0 left-0 right-0 z-50 p-4 sm:p-1 md:p-5 bg-color-bg shadow-md w-full fixed">
       <div className="sm:flex items-center lg:mx-[150px] md:mx-6 sm:mx-3">
         <img
-          className="lg:h-16 h-10 cursor-pointer"
+          className="sm:h-12 md:h-13 lg:h-13 h-10 cursor-pointer"
           src={logo}
           alt="Logo"
-          onClick={() => navigate("/")}
+          onClick={handleNavigation}
         />
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className="w-10 h-10 items-center justify-center flex text-white absolute right-8 top-6 cursor-pointer sm:hidden"
+          className="w-10 h-10 items-center justify-center flex text-white absolute right-4 top-4 cursor-pointer sm:hidden"
         >
-          <FaBars />
+          <FaBars className="text-[1.5em]" />
         </div>
 
         {userData && (
@@ -37,7 +51,7 @@ function Navbar() {
           >
             <li className="mx-11 my-6 md:my-0 text-right">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer "
+                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer "
                 onClick={() => navigate("/balance")}
               >
                 Saldo
@@ -45,7 +59,7 @@ function Navbar() {
             </li>
             <li className="mx-11 my-6 md:my-0 text-right">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
+                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
                 onClick={() => navigate("/history")}
               >
                 Historial
@@ -53,7 +67,7 @@ function Navbar() {
             </li>
             <li className="mx-11 my-6 md:my-0 text-right">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
+                className="lg:text-[1.2rem] md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer"
                 onClick={() => navigate("/transfer")}
               >
                 Transferir
@@ -61,8 +75,10 @@ function Navbar() {
             </li>
             <li className="mx-11 my-6 md:my-0 text-right">
               <a
-                className="lg:text-xl md:text-base font-[Open Sans] text-white hover:text-color-button duration-500 cursor-pointer "
+
+                className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-2 mt-10 w-80 block mx-auto "
                 onClick={handleClearAndReload}
+
               >
                 Cerrar sesion
               </a>

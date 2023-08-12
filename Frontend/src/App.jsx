@@ -1,4 +1,5 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Balance from "./pages/Balance";
@@ -9,26 +10,35 @@ import ConfirmTransfer from "./pages/ConfirmTransfer";
 import Footer from "./components/Footer";
 import ClosedSession from "./pages/ClosedSession";
 import CompletedTransaction from "./pages/CompletedTransaction";
-import { AutoLogout } from '../src/components/AutoLogout.jsx'
+import { AutoLogout } from "../src/components/AutoLogout.jsx";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { SesionContext } from "./context/SesionContext";
+
 function App() {
+  const { sesionData } = useContext(SesionContext);
+
+  const sesion = Boolean(sesionData?.token);
+
   return (
     <div className="app">
-        <Router>
-          {/* Autologut: la variable sessionTimeout es la cantidad de segundo para el auto logut */}
-          <AutoLogout sessionTimeout={20000}/>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/balance" element={<Balance />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/transfer" element={<Transfer />} />
-            <Route path="/confirm" element={<ConfirmTransfer/>} />
-            <Route path="/closed" element={<ClosedSession/>} />
-            <Route path="/completed" element={<CompletedTransaction/>} />
-          </Routes>
-          <Footer />
-        </Router>
-      </div>
+      {/* Autologut: la variable sessionTimeout es la cantidad de segundo para el auto logut */}
+
+      <AutoLogout sessionTimeout={20000} />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Login />} />
+
+        <Route element={<ProtectedRoute isAllowed={sesion} redirectTo="/" />}>
+          <Route path="/balance" element={<Balance />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/transfer" element={<Transfer />} />
+          <Route path="/confirm" element={<ConfirmTransfer />} />
+          <Route path="/completed" element={<CompletedTransaction />} />
+          <Route path="/closed" element={<ClosedSession />} />
+        </Route>
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 

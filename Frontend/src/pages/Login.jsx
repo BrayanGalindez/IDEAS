@@ -1,11 +1,13 @@
 import logo from "../assets/logo.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Importa la librería Axios
+// import axios from "axios";
+import { SesionContext } from "../context/SesionContext";
 
 const Login = () => {
+  const {login} = useContext(SesionContext)
   const navigate = useNavigate(); // Obtiene la función navigate
   const [showPassword, setShowPassword] = useState(false);
   const [cardNumber, setCardNumber] = useState(""); // Estado para almacenar el número de tarjeta
@@ -17,43 +19,13 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Evita el envío automático del formulario
-  
-    try {
-      // Realizar una solicitud POST a la API de login con Axios
-      const response = await axios.post(
-        "https://ideas-backend.vercel.app/api/users/login",
-        {
-          cardNumber: cardNumber, // Usa el estado para enviar el número de tarjeta
-          pin: pin, // Usa el estado para enviar el pin
-        }
-      );
-  
-      // Verificar la respuesta del servidor
-      if (response.status === 200) {
-        // La solicitud fue exitosa, puedes manejar la respuesta aquí
-        const userData = response.data[0]; // Esto contiene los datos del usuario, como nombre, apellido, saldo, etc.
-  
-        // Guardar los datos en el LocalStorage
-        localStorage.setItem("userData", JSON.stringify(userData));
-        localStorage.setItem("jwtToken", userData.jwtToken);
-  
-        console.log("Datos de usuario:", userData);
-  
-        // Redirigir al usuario a la ruta "/balance"
-        navigate("/balance");
-      } else {
-        // La solicitud no fue exitosa, puedes manejar el error aquí
-        console.error("Error al obtener los datos de usuarios");
-      }
-    } catch (error) {
-      // Ocurrió un error al realizar la solicitud, puedes manejarlo aquí
-      console.error("Error de red:", error);
-    }
+    await login(cardNumber, pin)
+    navigate("/balance");
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
+    <div className="flex flex-col items-center justify-center mt-28 mb-20">
+      <div className="max-w-[24.5rem] rounded overflow-hidden shadow-lg p-6 bg-white">
         <img className="h-20 mx-auto" src={logo} alt="Logo" />
         <h1 className="text-3xl font-bold text-center mt-4">Saint Patrick</h1>
         <form className="mt-6">
@@ -90,7 +62,7 @@ const Login = () => {
           >
             Iniciar sesión
           </button>
-          <p className="text-gray-600 font-[Open Sans] text-sm mt-4">
+          <p className="text-gray-600 font-[Open Sans] text-sm mt-6">
             Al continuar, confirmo que he leído y acepto los{" "}
             <span className="text-color-terms font-[Open Sans] cursor-pointer">
               Términos y condiciones

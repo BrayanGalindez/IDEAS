@@ -5,6 +5,7 @@ const treblle = require('@treblle/express') // Creates API documentation
 const { staticFiles, port, treblleApiKey, treblleProjectId } = require('./config/environment')
 const transactionsRoute = require('./routes/transactionsRoute')
 const usersRoute = require('./routes/usersRoute')
+const adminRoute = require('./routes/adminRoute')
 
 const app = express()
 
@@ -21,6 +22,7 @@ app.use(
 // ---------------------- ROUTES
 app.use('/api', transactionsRoute)
 app.use('/api', usersRoute)
+app.use('/api', adminRoute)
 app.use('/', express.static(staticFiles))
 
 // ---------------------- START SERVER

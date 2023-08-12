@@ -21,7 +21,7 @@ function Balance() {
       .then((response) => {
         if (response.status === 200) {
           const data = response.data;
-          console.log("Datos de balance:", data);
+
 
           if (data) {
             setSaldo(data); // Establecemos solo el saldo en el estado
