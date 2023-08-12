@@ -1,4 +1,5 @@
-import { FaCheckCircle, FaTimesCircle, FaCircle } from "react-icons/fa";
+import { FaTimesCircle, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 //import datahistory from "./dataHistory/datahistory.json";
 import axios from "axios"; // Importa la librería Axios
@@ -42,12 +43,12 @@ function History() {
         switch (status) {
             case "Realizada":
                 return {
-                    icon: <FaCheckCircle className="text-green-500" />,
+                    icon: <FaChevronUp className="text-green-500" />,
                     message: "Realizada",
                 };
             case "Recibida":
                 return {
-                    icon: <FaCircle className="text-blue-500" />,
+                    icon: <FaChevronDown className="text-blue-500" />,
                     message: "Recibida",
                 };
             case "Fallada":
@@ -61,18 +62,18 @@ function History() {
     };
 
     return (
-        <div className="m-[200px]">
-            <h1 className="text-2xl font-normal text-center mb-6">
+        <div className="my-40">
+            <h1 className="text-2xl font-normal text-center m-16">
                 Historial de transacciones
             </h1>
-            <div className="w-full table-fixed ">
+            <div className="xl:w-[800px] sm:w-[500px]  table-fixed justify-center mx-auto">
                 <div className="">
                     {transaction.map((transaction) => (
                         <div
                             key={transaction.id}
-                            className="border-y-2 flex justify-around"
+                            className="border-y-2 flex justify-between"
                         >
-                            <div>
+                            <div className="w-full">
                                 <p className="px-4 py-3 text-lg">
                                     {transaction.fecha}
                                 </p>
@@ -81,13 +82,15 @@ function History() {
                                 </p>
                             </div>
                             <div className="justify-end">
-                                <div className="px-4 py-3 flex items-center text-2xl">
-                                    {
-                                        renderStatusIconAndMessage(
-                                            transaction.descripcion
-                                        ).icon
-                                    }
-                                    <span className="ml-10 text-lg">
+                                <div className="px-4 py-3 flex items-center text-2xl w-full ">
+                                    <div className="text-start">
+                                        {
+                                            renderStatusIconAndMessage(
+                                                transaction.descripcion
+                                            ).icon
+                                        }
+                                    </div>
+                                    <span className="ml-10 text-lg text-right">
                                         {
                                             renderStatusIconAndMessage(
                                                 transaction.descripcion
@@ -104,13 +107,11 @@ function History() {
                 </div>
             </div>
 
-            <button
-                onClick=""
-                className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-2 mt-10 w-80 block mx-auto"
-                type="submit" // Agrega el tipo de botón "submit"
-            >
-                Nueva transacción
-            </button>
+            <Link to="/transfer">
+                <button className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-4 m-12 w-80 block mx-auto">
+                    Nueva transacción
+                </button>
+            </Link>
         </div>
     );
 }
