@@ -38,11 +38,14 @@ exports.getUserTransactions = async (req, res) => {
             response[i].datos_usuario = `${response[i].origen_nombre} ${response[i].origen_apellido}`
             response[i].tarjeta_origen = `${response[i].origen_nombre} ${response[i].origen_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
           }
+          response[i].fecha = `${response[i].fecha.getUTCDate().toString().padStart(2, '0')}-${response[i].fecha.getUTCMonth().toString().padStart(2, '0')}-${response[i].fecha.getUTCFullYear()}`
           
+          delete response[i].origen_usuario_id
           delete response[i].destino_nombre
           delete response[i].destino_apellido
           delete response[i].origen_nombre
           delete response[i].origen_apellido
+
         }
 
         res.status(200).json(response)
@@ -80,10 +83,11 @@ exports.postUserTransaction = async (req, res) => {
     // Traigo los datos del usuario (nombre, apellido, saldo)
     const origin_user = await UsersObject.getUserNameAndBalance(userId)
     
-    // Tiene saldo suficiente?
-    if (origin_user.saldo < req.body.monto) {
+   
+    // Monto de la transaccion es positivo y tiene saldo?
+    if (req.body.monto < 0 || req.body.monto > origin_user[0].saldo) {
       return res.status(400).json({
-        message: 'No tiene saldo suficiente.'
+        message: 'Monto no valido.'
       })
     }
 
