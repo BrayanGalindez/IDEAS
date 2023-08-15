@@ -6,7 +6,7 @@ const usersRoute = Router()
 
 usersRoute.post(
   '/users/login',
-  async (req, res) => {
+  (req, res) => {
     usersController.userLogin(req, res)
   }
 )
@@ -14,7 +14,7 @@ usersRoute.post(
 usersRoute.get(
   '/users/balance',
   passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     usersController.getUserBalance(req, res)
   }
 )
@@ -22,7 +22,7 @@ usersRoute.get(
 // ----------------------- para desarrollo
 usersRoute.get(
   '/users',
-  async (req, res) => {
+  (req, res) => {
     usersController.getUsers(req, res)
   }
 )
