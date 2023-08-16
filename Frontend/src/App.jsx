@@ -24,7 +24,7 @@ function App() {
     <div className="app">
       {/* Autologut: la variable sessionTimeout es la cantidad de segundo para el auto logut */}
 
-      <AutoLogout sessionTimeout={20000} />
+      {/* <AutoLogout sessionTimeout={20000} /> */}
       <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
