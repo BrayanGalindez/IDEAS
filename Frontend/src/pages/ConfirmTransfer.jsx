@@ -9,14 +9,12 @@ const ConfirmTransfer = () => {
   const [transferData, setTransferData] = useState(null);
 
   const {
-    recipient,
     selectedCard,
-    amount,
     formattedRecipient,
     formattedAmount,
     numerosDeTarjetas,
-    nombre,
-    apellido,
+    name,
+    lastname,
   } = location.state;
 
   // Usar useEffect para cargar los datos desde location.state
@@ -49,6 +47,7 @@ const ConfirmTransfer = () => {
       );
 
       if (response.status === 200) {
+        console.log(response)
         // Si la respuesta de la API es exitosa, redirigir al componente CompletedTransaction
         console.log("Transferencia realizada:");
         console.log("Tarjeta seleccionada:", transferData.selectedCard);
@@ -79,9 +78,9 @@ const ConfirmTransfer = () => {
       {/* Mostrar la tarjeta seleccionada */}
       <UserProfile
         card={selectedCard}
-        nombre={nombre}
+        nombre={name}
         numerosDeTarjetas={numerosDeTarjetas}
-        apellido={apellido}
+        apellido={lastname}
       />
 
       {/* Mostrar los detalles de la transacción */}

@@ -50,7 +50,6 @@ function Transfer() {
         },
       })
       .then((response) => {
-        console.log("hola1");
         let existeTarjeta = false;
         let montoActual
         let destino = formattedRecipient.replace(/-/g, '');
@@ -74,6 +73,8 @@ function Transfer() {
                 formattedRecipient,
                 formattedAmount,
                 numerosDeTarjetas,
+                name, 
+                lastname
               },
             })
           }else{

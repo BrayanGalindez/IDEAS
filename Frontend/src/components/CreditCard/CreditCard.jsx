@@ -11,23 +11,20 @@ const CreditCard = ({ cardNumber, cardHolder, expirationDate }) => {
       {/* Rectángulo que representa la tarjeta */}
       {/* <rect width="100%" height="100%" fill="#1E1E1E" rx="15" /> */}
       <image href={creditcard} width="100%" height="100%" rx="15" />
-      {/* Logo de la marca de la tarjeta */}
-      <text x="20" y="40" fill="white" fontSize="16">
-        VISA
-      </text>
-
+      
       {/* Número de tarjeta */}
-      <text x="30" y="120" fill="white" fontFamily="Inter" fontSize="16">
-        {cardNumber}
+      <text x="28" y="120" fill="white" letterSpacing="4.51px"  fontFamily="Gemunu Libre, sans-serif" fontSize="20.97">
+        {cardNumber.toUpperCase()}
       </text>
 
       {/* Titular de la tarjeta */}
-      <text x="20" y="170" fill="white" fontFamily="Inter" fontSize="16">
-        {cardHolder}
+      {/* <text x="20" y="170" fill="white" fontFamily="Inter" fontSize="16"> */}
+      <text x="28" y="170" fill="white" letterSpacing="5.88px" fontFamily="Gemunu Libre, sans-serif" fontSize="16">
+        {cardHolder.toUpperCase()}
       </text>
 
       {/* Fecha de expiración */}
-      <text x="220" y="142" fill="white" fontFamily="Inter" fontSize="16">
+      <text x="220" y="142" fill="white" letterSpacing="1.23px"  fontFamily="Gemunu Libre, sans-serif" fontSize="17.56">
         {expirationDate}
       </text>
     </svg>
