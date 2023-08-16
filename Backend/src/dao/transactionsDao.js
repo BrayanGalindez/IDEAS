@@ -7,10 +7,14 @@ class Transactions {
   }
 
   async getUserTransactions (id) {
-    await this.connectToDb()
-    const selectQuery = 'SELECT * FROM ideatransactions WHERE origen_usuario_id = $1 OR destino_usuario_id = $1'
-    const response = await this.client.query(selectQuery, [id])
-    return response.rows
+    try{
+      await this.connectToDb()
+      const selectQuery = 'SELECT * FROM ideatransactions WHERE origen_usuario_id = $1 OR destino_usuario_id = $1'
+      const response = await this.client.query(selectQuery, [id])
+      return response.rows
+    } catch (error) {
+      throw error
+    }
   }
 
   async getUserTransactionsSummary (id) {
