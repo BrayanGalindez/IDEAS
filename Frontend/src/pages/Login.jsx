@@ -33,6 +33,7 @@ const Login = () => {
           <input
             className="w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
             type="text"
+            required
             value={cardNumber} // Asigna el valor del estado al campo de entrada
             onChange={(e) => setCardNumber(e.target.value)} // Actualiza el estado cuando el campo cambia
           />
@@ -41,6 +42,7 @@ const Login = () => {
             <input
               className="w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
               type={showPassword ? "text" : "password"}
+              required
               value={pin} // Asigna el valor del estado al campo de entrada
               onChange={(e) => setPin(e.target.value)} // Actualiza el estado cuando el campo cambia
             />
@@ -58,8 +60,8 @@ const Login = () => {
           <button
             onClick={handleLogin}
             className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full"
-            type="submit" // Agrega el tipo de botón "submit"
-          >
+            type="submit"
+          > 
             Iniciar sesión
           </button>
           <p className="text-gray-600 font-[Open Sans] text-sm mt-6">
