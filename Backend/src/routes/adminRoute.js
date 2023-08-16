@@ -7,7 +7,7 @@ const adminRoute = Router()
 // ------------------ Admin users
 adminRoute.post(
   '/admin/login',
-  async (req, res) => {
+  (req, res) => {
     adminController.adminLogin(req, res)
   }
 )
@@ -15,7 +15,7 @@ adminRoute.post(
 adminRoute.post(
   '/admin/user',
   passport.authenticate('jwtadmin', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     adminController.newUser(req, res)
   }
 )
@@ -23,7 +23,7 @@ adminRoute.post(
 adminRoute.put(
   '/admin/user',
   passport.authenticate('jwtadmin', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     adminController.updateUser(req, res)
   }
 )
@@ -31,7 +31,7 @@ adminRoute.put(
 adminRoute.delete(
   '/admin/user',
   passport.authenticate('jwtadmin', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     adminController.deleteUser(req, res)
   }
 )
@@ -40,7 +40,7 @@ adminRoute.delete(
 adminRoute.post(
   '/admin/cards',
   passport.authenticate('jwtadmin', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     adminController.newCard(req, res)
   }
 )
@@ -48,7 +48,7 @@ adminRoute.post(
 adminRoute.delete(
   '/admin/cards',
   passport.authenticate('jwtadmin', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     adminController.deleteCard(req, res)
   }
 )

@@ -44,7 +44,7 @@ exports.newUser = async (req, res) => {
       })
     }
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({error})
   }
 }
 
@@ -64,7 +64,7 @@ exports.getUser = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({error})
   }
 }
 
@@ -87,7 +87,7 @@ exports.updateUser = async (req, res) => {
       })
     }
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({error})
   }
 }
 
@@ -106,7 +106,7 @@ exports.deleteUser = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({error})
   }
 }
 

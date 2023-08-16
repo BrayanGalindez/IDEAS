@@ -1,12 +1,14 @@
 const pkg = require('pg')
 const { Client } = pkg
 
+const { postgresuser, postgreshost, postgresdb, postgrespassword, postgresport } = require('./environment.js')
+
 const client = new Client({
-  user: 'default',
-  host: 'ep-restless-feather-07309582-pooler.us-east-1.postgres.vercel-storage.com',
-  database: 'verceldb',
-  password: 'KSk0VeZJMR2b',
-  port: 5432,
+  user: postgresuser,
+  host: postgreshost,
+  database: postgresdb,
+  password: postgrespassword,
+  port: postgresport,
   ssl: {
     rejectUnauthorized: false
   }

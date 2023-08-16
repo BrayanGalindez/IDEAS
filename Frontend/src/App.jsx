@@ -9,6 +9,7 @@ import Transfer from "./pages/Transfer";
 import ConfirmTransfer from "./pages/ConfirmTransfer";
 import Footer from "./components/Footer";
 import ClosedSession from "./pages/ClosedSession";
+import AutoClosedSession from "./pages/AutoClosedSession";
 import CompletedTransaction from "./pages/CompletedTransaction";
 import { AutoLogout } from "../src/components/AutoLogout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/confirm" element={<ConfirmTransfer />} />
           <Route path="/completed" element={<CompletedTransaction />} />
           <Route path="/closed" element={<ClosedSession />} />
+          <Route path="/autoclosed" element={<AutoClosedSession />} />
         </Route>
       </Routes>
       <Footer />

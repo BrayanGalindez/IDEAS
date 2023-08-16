@@ -19,7 +19,7 @@ export const AutoLogout = ({ sessionTimeout }) => {
         //Funcion que realiza el cierre de sesion 
         const handleLogout = async () => {
             if(userData){
-                await navigate('/closed');
+                await navigate('/autoclosed');
                 localStorage.clear();
             }
         };
