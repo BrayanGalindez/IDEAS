@@ -23,16 +23,20 @@ export const SesionProvider = ({ children }) => {
       );
 
       if (response.status === 200) {
+        setLoad(false)
         const userData = response.data[0];
 
         localStorage.setItem("userData", JSON.stringify(userData));
         localStorage.setItem("jwtToken", userData.jwtToken);
 
         setSesionData({ userData: userData, token: userData.jwtToken });
-      } else {
-        console.error("Error al obtener los datos de usuarios");
       }
+
     } catch (error) {
+      setSesionData({
+        userData: null,
+        token: window.localStorage.getItem("jwtToken"),
+      })
       setLoad(false)
       setError("Error en los datos ingresados")
       console.error("Error al iniciar sesión:", error);

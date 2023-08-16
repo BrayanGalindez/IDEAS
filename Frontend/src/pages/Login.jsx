@@ -71,7 +71,6 @@ const Login = () => {
               </button>
             ) : (
               <button
-                onClick={handleLogin}
                 className="font-[Open Sans] text-black bg-color-button-hover disabled:opacity-100 rounded-full px-6 py-2 mt-6 w-full"
                 disabled
                 type="submit"
