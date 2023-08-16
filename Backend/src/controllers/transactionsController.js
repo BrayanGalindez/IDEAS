@@ -11,23 +11,7 @@ exports.getUserTransactions = async (req, res) => {
         })
       }
       const response = await TransactionsObject.getUserTransactionsSummary(req.query.id)
-      if (response.length > 0) {
-        
-        /* ELIMINAMOS ESTA LOGICA YA QUE HACE DEMASIADAS CONSULTAS A LA BASE DE DATOS
-        // En lugar de devolver los id de la tarjeta, devuelvo el numero
-        for (let i = 0; i < response.length; i++) {
-          const item = response[i]
-          item.tarjeta_origen = await CardsObject.getCardNumberByCardId(item.tarjeta_origen)
-          item.tarjeta_destino = await CardsObject.getCardNumberByCardId(item.tarjeta_destino)
-          if (Number(req.query.id) === item.origen_usuario_id) {
-            item.descripcion = 'Realizada'
-            item.datos_usuario = await UsersObject.getUserNameById(item.destino_usuario_id)
-          } else {
-            item.descripcion = 'Recibida'
-            item.datos_usuario = await UsersObject.getUserNameById(item.origen_usuario_id)
-          }
-        }*/
-
+      if (response.length > 0) {   
         for (let i = 0; i < response.length; i++) {
           if (response[i].origen_usuario_id === req.user) {
             response[i].descripcion = 'Realizada'
@@ -45,22 +29,22 @@ exports.getUserTransactions = async (req, res) => {
           delete response[i].destino_apellido
           delete response[i].origen_nombre
           delete response[i].origen_apellido
-
         }
-
         res.status(200).json(response)
+
       } else {
         res.status(400).json({
           message: 'No se encontraron transacciones para el usuario especificado.'
         })
       }
+
     } else {
       res.status(400).json({
         message: 'Debe incluir id en la peticion'
       })
     }
+
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error })
   }
 }
@@ -82,8 +66,7 @@ exports.postUserTransaction = async (req, res) => {
 
     // Traigo los datos del usuario (nombre, apellido, saldo)
     const origin_user = await UsersObject.getUserNameAndBalance(userId)
-    
-   
+       
     // Monto de la transaccion es positivo y tiene saldo?
     if (req.body.monto < 0 || req.body.monto > origin_user[0].saldo) {
       return res.status(400).json({
@@ -134,13 +117,13 @@ exports.postUserTransaction = async (req, res) => {
         saldo
       })
     } else {
+
       // La transaccion se realizo pero alguno de los saldos de los usuarios no pudo ser actualizado.
       res.status(400).json({
         message: 'Error al realizar la transaccion. Comuniquese con el banco.'
       })
     }
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error })
   }
 }
