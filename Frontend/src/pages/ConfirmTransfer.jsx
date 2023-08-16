@@ -74,7 +74,7 @@ const ConfirmTransfer = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-3xl font-bold mb-4">Confirmar transacción</h1>
+      <h1 className="text-3xl font-bold mt-20 mb-4">Confirmar transacción</h1>
 
       {/* Mostrar la tarjeta seleccionada */}
       <UserProfile
@@ -104,6 +104,14 @@ const ConfirmTransfer = () => {
             readOnly // Hacer el campo de destinatario de solo lectura
           />
         </div>
+        <button
+          type="button"
+          className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
+          onClick={() => {navigate("/transfer")}}
+        >
+          Cancelar
+        </button>
+        <br />
         <button
           type="button"
           className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
