@@ -7,7 +7,7 @@ const transactionsRoute = Router()
 transactionsRoute.get(
   '/transactions',
   passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     transactionsController.getUserTransactions(req, res)
   })
 
@@ -15,7 +15,7 @@ transactionsRoute.get(
 transactionsRoute.post(
   '/transactions',
   passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
+  (req, res) => {
     transactionsController.postUserTransaction(req, res)
   }
 )
