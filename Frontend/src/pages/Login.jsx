@@ -33,7 +33,7 @@ const Login = () => {
           <h1 className="text-xl font-[Open Sans] mb-2">Usuario</h1>
           <input
             onClick={() => {setError("")}}
-            className="w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
+            className={!error ? "w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500" : "w-full px-4 py-2 rounded border border-red-700"}
             type="text"
             value={cardNumber} // Asigna el valor del estado al campo de entrada
             onChange={(e) => setCardNumber(e.target.value)} // Actualiza el estado cuando el campo cambia
@@ -42,7 +42,7 @@ const Login = () => {
           <div className="relative">
             <input
               onClick={() => {setError("")}}
-              className="w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
+              className={!error ? "w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500" : "w-full px-4 py-2 rounded border border-red-700"}
               type={showPassword ? "text" : "password"}
               value={pin} // Asigna el valor del estado al campo de entrada
               onChange={(e) => setPin(e.target.value)} // Actualiza el estado cuando el campo cambia
