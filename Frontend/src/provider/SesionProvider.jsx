@@ -8,6 +8,7 @@ export const SesionProvider = ({ children }) => {
     userData: null,
     token: window.localStorage.getItem("jwtToken"),
   });
+  const [sesionError, setSesionError] = useState("")
 
   const login = async (cardNumber, pin) => {
     try {
@@ -30,12 +31,13 @@ export const SesionProvider = ({ children }) => {
         console.error("Error al obtener los datos de usuarios");
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      console.error("Error al iniciar sesion", error);
+      setSesionError(error.response.data)
     }
   };
 
   return (
-    <SesionContext.Provider value={{ login, sesionData }}>
+    <SesionContext.Provider value={{ login, sesionData, sesionError }}>
       {children}
     </SesionContext.Provider>
   );
