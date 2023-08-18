@@ -21,6 +21,22 @@ class Users {
     }
   }
 
+  async getUserByCardNumber (cardNumber) {
+    try {
+      await this.connectToDb()
+      const selectQuery = 'SELECT usuario_id FROM ideacards WHERE numero_tarjeta = $1'
+      let response = await this.client.query(selectQuery, [cardNumber])
+      if (response.rowCount > 0) {
+        const selectQuery = 'SELECT * FROM ideausers WHERE id = $1 AND activo = $2'
+        response = await this.client.query(selectQuery, [response.rows[0].usuario_id, true])
+        return response.rowCount > 0 ? response.rows[0] : null
+      }
+      return null     
+    } catch (error) {
+      throw error
+    }
+  }
+
   async getUserNameAndBalance (id) {
     try {
       await this.connectToDb()

@@ -20,4 +20,13 @@ transactionsRoute.post(
   }
 )
 
+// Verifica si es posible una transaccion
+transactionsRoute.post(
+  '/transactions/verify',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    transactionsController.checkUserTransaction(req, res)
+  }
+)
+
 module.exports = transactionsRoute
