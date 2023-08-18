@@ -21,10 +21,11 @@ function App() {
   const sesion = Boolean(sesionData?.token);
 
   return (
-    <div className="app">
+    // <div className="app">
+      <div id="root" className="flex flex-col min-h-screen overflow-hidden sm:overflow-auto">
       {/* Autologut: la variable sessionTimeout es la cantidad de segundo para el auto logut */}
 
-      <AutoLogout sessionTimeout={20000} />
+      {/* <AutoLogout sessionTimeout={20000} /> */}
       <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />

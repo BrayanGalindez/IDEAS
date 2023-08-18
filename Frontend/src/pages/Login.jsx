@@ -3,11 +3,12 @@ import { useContext, useState } from "react";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { Spin } from "../components/Spin" 
 // import axios from "axios";
 import { SesionContext } from "../context/SesionContext";
 
 const Login = () => {
-  const {login} = useContext(SesionContext)
+  const {login, error, load, setError} = useContext(SesionContext)
   const navigate = useNavigate(); // Obtiene la función navigate
   const [showPassword, setShowPassword] = useState(false);
   const [cardNumber, setCardNumber] = useState(""); // Estado para almacenar el número de tarjeta
@@ -31,7 +32,8 @@ const Login = () => {
         <form className="mt-6">
           <h1 className="text-xl font-[Open Sans] mb-2">Usuario</h1>
           <input
-            className="w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
+            onClick={() => {setError("")}}
+            className={!error ? "w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500" : "w-full px-4 py-2 rounded border border-red-700"}
             type="text"
             value={cardNumber} // Asigna el valor del estado al campo de entrada
             onChange={(e) => setCardNumber(e.target.value)} // Actualiza el estado cuando el campo cambia
@@ -39,7 +41,8 @@ const Login = () => {
           <h1 className="text-xl font-[Open Sans] mt-4 mb-2">Pin</h1>
           <div className="relative">
             <input
-              className="w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
+              onClick={() => {setError("")}}
+              className={!error ? "w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500" : "w-full px-4 py-2 rounded border border-red-700"}
               type={showPassword ? "text" : "password"}
               value={pin} // Asigna el valor del estado al campo de entrada
               onChange={(e) => setPin(e.target.value)} // Actualiza el estado cuando el campo cambia
@@ -55,13 +58,27 @@ const Login = () => {
               )}
             </div>
           </div>
-          <button
-            onClick={handleLogin}
-            className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full"
-            type="submit" // Agrega el tipo de botón "submit"
-          >
-            Iniciar sesión
-          </button>
+          <p className="text-red-600 font-[Open Sans] text-sm mt-4 flex justify-center">{error}</p>
+            {load === true ? <Spin/> : ""}
+            {
+            pin !== "" && cardNumber !== "" ? (
+              <button
+                onClick={handleLogin}
+                className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full"
+                type="submit"
+              >
+                Iniciar sesión
+              </button>
+            ) : (
+              <button
+                className="font-[Open Sans] text-black bg-color-button-hover disabled:opacity-100 rounded-full px-6 py-2 mt-6 w-full"
+                disabled
+                type="submit"
+              >
+                Iniciar sesión
+              </button>
+            )
+          }
           <p className="text-gray-600 font-[Open Sans] text-sm mt-6">
             Al continuar, confirmo que he leído y acepto los{" "}
             <span className="text-color-terms font-[Open Sans] cursor-pointer">

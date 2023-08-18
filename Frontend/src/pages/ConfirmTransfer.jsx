@@ -9,14 +9,14 @@ const ConfirmTransfer = () => {
   const [transferData, setTransferData] = useState(null);
 
   const {
-    recipient,
     selectedCard,
-    amount,
     formattedRecipient,
     formattedAmount,
     numerosDeTarjetas,
-    nombre,
-    apellido,
+    name,
+    lastname,
+    nameReceiver,
+    lastNameReceiver,
   } = location.state;
 
   // Usar useEffect para cargar los datos desde location.state
@@ -30,7 +30,7 @@ const ConfirmTransfer = () => {
     try {
       // Verificar si se cargaron los datos correctamente
       if (!transferData) {
-        console.error("Error: Datos de transferencia no cargados");
+        // console.error("Error: Datos de transferencia no cargados");
         return;
       }
       // Realizar la solicitud POST al backend con los datos necesarios
@@ -49,39 +49,41 @@ const ConfirmTransfer = () => {
       );
 
       if (response.status === 200) {
+        const {saldo} = response.data
+        // console.log(response);
         // Si la respuesta de la API es exitosa, redirigir al componente CompletedTransaction
-        console.log("Transferencia realizada:");
-        console.log("Tarjeta seleccionada:", transferData.selectedCard);
-        console.log("Monto:", transferData.amount);
-        console.log("Destinatario:", transferData.recipient);
+        // console.log("Transferencia realizada:");
+        // console.log("Tarjeta seleccionada:", transferData.selectedCard);
+        // console.log("Monto:", transferData.amount);
+        // console.log("Destinatario:", transferData.recipient);
         navigate("/completed", {
           state: {
             amount: transferData.amount,
             formattedRecipient: transferData.formattedRecipient,
+            nameReceiver,
+            lastNameReceiver,
+            currentAmount: saldo,
           },
         });
-      } else {
-        // Manejar el caso de respuesta no exitosa
-        console.error("Error en la solicitud de transacción");
       }
     } catch (error) {
-      console.error("Error en la solicitud de transacción:", error);
+      // console.error("Error en la solicitud de transacción:", error);
       if (error.response) {
-        console.log("Detalles del error:", error.response.data);
+        // console.log("Detalles del error:", error.response.data);
       }
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-3xl font-bold mb-4">Confirmar transacción</h1>
+      <h1 className="text-3xl font-bold mt-20 mb-4">Confirmar transacción</h1>
 
       {/* Mostrar la tarjeta seleccionada */}
       <UserProfile
         card={selectedCard}
-        nombre={nombre}
+        nombre={name}
         numerosDeTarjetas={numerosDeTarjetas}
-        apellido={apellido}
+        apellido={lastname}
       />
 
       {/* Mostrar los detalles de la transacción */}
@@ -104,6 +106,16 @@ const ConfirmTransfer = () => {
             readOnly // Hacer el campo de destinatario de solo lectura
           />
         </div>
+        <button
+          type="button"
+          className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
+          onClick={() => {
+            navigate("/transfer");
+          }}
+        >
+          Cancelar
+        </button>
+        <br />
         <button
           type="button"
           className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
