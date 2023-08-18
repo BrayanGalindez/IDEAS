@@ -44,7 +44,7 @@ export const SesionProvider = ({ children }) => {
   };
 
   return (
-    <SesionContext.Provider value={{ login, sesionData, error, load, setError }}>
+    <SesionContext.Provider value={{ login, sesionData, error, load, setError, setSesionData }}>
       {children}
     </SesionContext.Provider>
   );

@@ -28,6 +28,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/closed" element={<ClosedSession />} />
 
         <Route element={<ProtectedRoute isAllowed={sesion} redirectTo="/" />}>
           <Route path="/balance" element={<Balance />} />

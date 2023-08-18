@@ -4,8 +4,7 @@ import { FaBars } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { SesionContext } from "../context/SesionContext";
 function Navbar() {
-    const { sesionData } = useContext(SesionContext);
-    const sesion = Boolean(sesionData?.token);
+    const { setSesionData } = useContext(SesionContext);
     const [sesionActive, setSesionActive] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -14,16 +13,21 @@ function Navbar() {
     const userData = JSON.parse(data);
 
     const handleClear = () => {
+        
         window.localStorage.clear();
+        setSesionData({
+            userData: null,
+            token: window.localStorage.getItem("jwtToken"),
+        })
         setSesionActive(!sesionActive);
         return navigate("/closed");
     };
 
     const handleNavigation = () => {
-        if (sesionActive === true) {
+        if (!setSesionData) {
             return navigate("/");
         }
-        if (sesion === true) {
+        if (setSesionData) {
             return navigate("/balance");
         }
     };
