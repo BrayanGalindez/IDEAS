@@ -1,34 +1,41 @@
-const pkg = require('pg')
-const { postgresuser, postgreshost, postgresdb, postgrespassword, postgresport } = require('./environment.js')
+const pkg = require('pg');
+const { postgres_url } = require('./environment.js');
 
-const { Client } = pkg
+const { Pool } = pkg;
 
-const client = new Client({
-  user: postgresuser,
-  host: postgreshost,
-  database: postgresdb,
-  password: postgrespassword,
-  port: postgresport,
-  ssl: {
-    rejectUnauthorized: false,
-    sslmode: 'require'
+const pool = new Pool({
+  connectionString: `${postgres_url}?sslmode=require`
+});
+
+
+let isReconnecting = false;
+pool.on('error', async (err) => {
+  console.error('Unhandled error in PostgreSQL pool:', err);
+  if (!isReconnecting) {
+    isReconnecting = true;
+    console.log('Attempting to reconnect...');
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    isReconnecting = false;
+    console.log('Reconnection attempt complete.');
   }
-})
+});
 
-let isConected
+let isConnected = false;
 const connectToDb = async () => {
-  if (!isConected) { // Esta logica es para evitar varias conexiones simultaneas
-    await client
-      .connect()
-      .then(() => {
-        isConected = true
-        console.log('PostgreDB Connected...')
-      })
-      .catch((err) => console.error(`Ideas PostgreDB ${err}`))
+  if (!isConnected) {
+    try {
+      await pool.connect();
+      isConnected = true;
+      console.log('PostgreDB Connected...');
+    } catch (err) {
+      console.error(`Error connecting to PostgreDB: ${err}`);
+      return;
+    }
   }
-}
+};
 
 module.exports = {
-  client,
+  pool,
   connectToDb
-}
+};
+
