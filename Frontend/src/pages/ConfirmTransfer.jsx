@@ -15,6 +15,8 @@ const ConfirmTransfer = () => {
     numerosDeTarjetas,
     name,
     lastname,
+    nameReceiver,
+    lastNameReceiver,
   } = location.state;
 
   // Usar useEffect para cargar los datos desde location.state
@@ -28,7 +30,7 @@ const ConfirmTransfer = () => {
     try {
       // Verificar si se cargaron los datos correctamente
       if (!transferData) {
-        console.error("Error: Datos de transferencia no cargados");
+        // console.error("Error: Datos de transferencia no cargados");
         return;
       }
       // Realizar la solicitud POST al backend con los datos necesarios
@@ -47,26 +49,27 @@ const ConfirmTransfer = () => {
       );
 
       if (response.status === 200) {
-        console.log(response)
+        const {saldo} = response.data
+        // console.log(response);
         // Si la respuesta de la API es exitosa, redirigir al componente CompletedTransaction
-        console.log("Transferencia realizada:");
-        console.log("Tarjeta seleccionada:", transferData.selectedCard);
-        console.log("Monto:", transferData.amount);
-        console.log("Destinatario:", transferData.recipient);
+        // console.log("Transferencia realizada:");
+        // console.log("Tarjeta seleccionada:", transferData.selectedCard);
+        // console.log("Monto:", transferData.amount);
+        // console.log("Destinatario:", transferData.recipient);
         navigate("/completed", {
           state: {
             amount: transferData.amount,
             formattedRecipient: transferData.formattedRecipient,
+            nameReceiver,
+            lastNameReceiver,
+            currentAmount: saldo,
           },
         });
-      } else {
-        // Manejar el caso de respuesta no exitosa
-        console.error("Error en la solicitud de transacción");
       }
     } catch (error) {
-      console.error("Error en la solicitud de transacción:", error);
+      // console.error("Error en la solicitud de transacción:", error);
       if (error.response) {
-        console.log("Detalles del error:", error.response.data);
+        // console.log("Detalles del error:", error.response.data);
       }
     }
   };
@@ -106,7 +109,9 @@ const ConfirmTransfer = () => {
         <button
           type="button"
           className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded"
-          onClick={() => {navigate("/transfer")}}
+          onClick={() => {
+            navigate("/transfer");
+          }}
         >
           Cancelar
         </button>

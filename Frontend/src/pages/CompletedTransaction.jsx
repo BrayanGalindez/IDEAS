@@ -2,10 +2,28 @@ import { Link } from "react-router-dom";
 import check from "../assets/check.svg";
 import { useLocation } from "react-router-dom";
 
+function getCurrentDate() {
+  const currentDate = new Date();
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1; // Los meses en JavaScript son base 0
+  const year = currentDate.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
 function CompletedTransaction() {
   const location = useLocation();
-  const { amount, formattedRecipient } = location.state;
-  
+  const {
+    amount,
+    formattedRecipient,
+    nameReceiver,
+    lastNameReceiver,
+    currentAmount,
+  } = location.state;
+  // console.log("amount:", amount);
+  // console.log("formattedRecipient:", formattedRecipient);
+  // console.log("nameReceiver:", nameReceiver);
+  // console.log("lastNameReceiver:", lastNameReceiver);
+
   return (
     <div className="flex justify-center items-center h-screen flex-col bg-color-bg">
       <div className=" bg-color-bg p-6 rounded shadow-md max-w-sm">
@@ -23,9 +41,13 @@ function CompletedTransaction() {
           Transacción realizada con éxito
         </h2>
         <div className="text-white 600 mb-4">
-          <p>Monto: {amount}</p>
-          <p>Destino: {formattedRecipient}</p>
-          <p>Fecha de transacción: 02/08/2023</p>
+          <p>Monto actual: {currentAmount}</p>
+          <p>Monto enviado: {amount}</p>
+          <p>Numero destino: {formattedRecipient}</p>
+          <p>
+            Destinatario: {nameReceiver} {lastNameReceiver}
+          </p>
+          <p>Fecha de transacción: {getCurrentDate()}</p>
         </div>
         <div className="flex flex-col items-center">
           <div className="w-full">
