@@ -1,9 +1,9 @@
-const { client, connectToDb } = require('../config/postgreConection')
+const { pool, connectToDb } = require('../config/postgreConection')
 const bcrypt = require('bcrypt')
 
 class Users {
   constructor () {
-    this.client = client
+    this.pool = pool
     this.connectToDb = connectToDb
   }
 
@@ -11,7 +11,7 @@ class Users {
     try {
       await this.connectToDb()
       const selectQuery = 'SELECT * FROM ideausers WHERE id = $1 AND activo = $2 AND role = $3'
-      const response = await this.client.query(selectQuery, [userId, true, role])
+      const response = await this.pool.query(selectQuery, [userId, true, role])
       if (response.rowCount > 0 && bcrypt.compareSync(pin, response.rows[0].pin)) {
         return response.rows
       }
@@ -25,10 +25,10 @@ class Users {
     try {
       await this.connectToDb()
       const selectQuery = 'SELECT usuario_id FROM ideacards WHERE numero_tarjeta = $1'
-      let response = await this.client.query(selectQuery, [cardNumber])
+      let response = await this.pool.query(selectQuery, [cardNumber])
       if (response.rowCount > 0) {
         const selectQuery = 'SELECT * FROM ideausers WHERE id = $1 AND activo = $2'
-        response = await this.client.query(selectQuery, [response.rows[0].usuario_id, true])
+        response = await this.pool.query(selectQuery, [response.rows[0].usuario_id, true])
         return response.rowCount > 0 ? response.rows[0] : null
       }
       return null     
@@ -41,7 +41,7 @@ class Users {
     try {
       await this.connectToDb()
       const selectQuery = 'SELECT nombre, apellido, saldo FROM ideausers WHERE id = $1'
-      const response = await this.client.query(selectQuery, [id])
+      const response = await this.pool.query(selectQuery, [id])
       return response.rows
     } catch (error) {
       throw error
@@ -52,7 +52,7 @@ class Users {
     try {
       await this.connectToDb()
       const selectQuery = 'SELECT saldo FROM ideausers WHERE id = $1 AND activo = $2'
-      const response = await this.client.query(selectQuery, [id, true])
+      const response = await this.pool.query(selectQuery, [id, true])
       return response.rows[0].saldo
     } catch (error) {
       throw error
@@ -63,7 +63,7 @@ class Users {
     try {
       await this.connectToDb()
       const updateQuery = 'UPDATE ideausers SET saldo = saldo + $1 WHERE id = $2 AND activo = $3'
-      const response = await this.client.query(updateQuery, [amount, id, true])
+      const response = await this.pool.query(updateQuery, [amount, id, true])
       return response.rowCount
     } catch (error) {
       throw error
@@ -74,7 +74,7 @@ class Users {
     try {
       await this.connectToDb()
       const selectQuery = 'SELECT nombre, apellido FROM ideausers WHERE id = $1'
-      const response = await this.client.query(selectQuery, [id])
+      const response = await this.pool.query(selectQuery, [id])
       return response.rows[0]
     } catch (error) {
       throw error
@@ -85,7 +85,7 @@ class Users {
     try {
       await this.connectToDb()
       const insertQuery = 'INSERT INTO ideausers (nombre, apellido, pin, saldo, picture, activo) VALUES ($1, $2, $3, $4, $5, $6)'
-      const response = await this.client.query(insertQuery, [data.nombre, data.apellido, data.pin, data.saldo, data.picture, true])
+      const response = await this.pool.query(insertQuery, [data.nombre, data.apellido, data.pin, data.saldo, data.picture, true])
       return response.rowCount
     } catch (error) {
       throw error
@@ -96,7 +96,7 @@ class Users {
     try {
       await this.connectToDb()
       const selectQuery = 'SELECT * FROM ideausers WHERE id = $1 AND activo = $2'
-      const response = await this.client.query(selectQuery, [id, true])
+      const response = await this.pool.query(selectQuery, [id, true])
       return response.rows
     } catch (error) {
       throw error
@@ -107,7 +107,7 @@ class Users {
     try {
       await this.connectToDb()
       const selectQuery = 'SELECT * FROM ideausers WHERE activo = $1 AND role = $2'
-      const response = await this.client.query(selectQuery, [true, 'USER'])
+      const response = await this.pool.query(selectQuery, [true, 'USER'])
       return response.rows
     } catch (error) {
       throw error
@@ -118,7 +118,7 @@ class Users {
     try {
       await this.connectToDb()
       const updateQuery = 'UPDATE ideausers SET nombre = $1, apellido = $2, pin = $3, saldo = $4, picture = $5 WHERE id = $6'
-      const response = await this.client.query(updateQuery, [data.nombre, data.apellido, data.pin, data.saldo, data.picture, data.id])
+      const response = await this.pool.query(updateQuery, [data.nombre, data.apellido, data.pin, data.saldo, data.picture, data.id])
       return response.rowCount
     } catch (error) {
       throw error
@@ -129,7 +129,7 @@ class Users {
     try {
       await this.connectToDb()
       const updateQuery = 'UPDATE ideausers SET activo = $1 WHERE id = $2'
-      const response = await this.client.query(updateQuery, [false, id])
+      const response = await this.pool.query(updateQuery, [false, id])
       return response.rowCount
     } catch (error) {
       throw error
