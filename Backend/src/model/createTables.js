@@ -1,9 +1,9 @@
 const pkg = require('pg')
-const { Client } = pkg
+const { pool } = pkg
 
 const { postgresuser, postgreshost, postgresdb, postgrespassword, postgresport } = require('./environment.js')
 
-const client = new Client({
+const pool = new pool({
   user: postgresuser,
   host: postgreshost,
   database: postgresdb,
@@ -18,7 +18,7 @@ let isConected
 const connectToDb = async () => {
   try {
     if (!isConected) {
-      await client.connect()
+      await pool.connect()
       isConected = true
       console.log('PostgreDB Conectada...')
     }
@@ -73,13 +73,13 @@ CREATE TABLE IF NOT EXISTS ideatransactions (
 
 connectToDb()
 const fn = async () => {
-  let result = await client.query(createusers)
+  let result = await pool.query(createusers)
   console.log(result)
-  result = await client.query(createcards)
+  result = await pool.query(createcards)
   console.log(result)
-  result = await client.query(createtrasactions)
+  result = await pool.query(createtrasactions)
   console.log(result)
-  client.end()
+  pool.end()
 }
 
 fn()

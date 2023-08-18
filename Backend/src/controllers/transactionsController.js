@@ -52,6 +52,7 @@ exports.getUserTransactions = async (req, res) => {
 
 exports.postUserTransaction = async (req, res) => {
   try {
+
     const checkResponse = await checkUserTransactionHelper(req)
     if (!checkResponse.valid) {
       return res.status(400).json({
@@ -59,7 +60,7 @@ exports.postUserTransaction = async (req, res) => {
         valid: false
       })
     }
-   
+  
     // La transaccion espera el id de tarjeta y no sus numeros.
     req.body.tarjeta_origen = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_origen)
     req.body.tarjeta_destino = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_destino)
@@ -100,6 +101,7 @@ exports.postUserTransaction = async (req, res) => {
         valid: false
       })
     }
+
   } catch (error) {
     res.status(500).json({ error: error, valid: false })
   }
