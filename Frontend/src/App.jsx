@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 import ClosedSession from "./pages/ClosedSession";
 import AutoClosedSession from "./pages/AutoClosedSession";
 import CompletedTransaction from "./pages/CompletedTransaction";
-// import { AutoLogout } from "../src/components/AutoLogout.jsx";
+import { AutoLogout } from "../src/components/AutoLogout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { SesionContext } from "./context/SesionContext";
 
@@ -21,24 +21,27 @@ function App() {
   const sesion = Boolean(sesionData?.token);
 
   return (
-    <div className="app">
+    <div className="xl:flex xl:flex-col xl:min-h-screen">
       {/* Autologut: la variable sessionTimeout es la cantidad de segundo para el auto logut */}
 
-      {/* <AutoLogout sessionTimeout={20000} /> */}
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Login />} />
+      <AutoLogout sessionTimeout={20000} />
 
-        <Route element={<ProtectedRoute isAllowed={sesion} redirectTo="/" />}>
-          <Route path="/balance" element={<Balance />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/transfer" element={<Transfer />} />
-          <Route path="/confirm" element={<ConfirmTransfer />} />
-          <Route path="/completed" element={<CompletedTransaction />} />
-          <Route path="/closed" element={<ClosedSession />} />
-          <Route path="/autoclosed" element={<AutoClosedSession />} />
-        </Route>
-      </Routes>
+      <div className="xl:flex-grow">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Login />} />
+
+          <Route element={<ProtectedRoute isAllowed={sesion} redirectTo="/" />}>
+            <Route path="/balance" element={<Balance />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/transfer" element={<Transfer />} />
+            <Route path="/confirm" element={<ConfirmTransfer />} />
+            <Route path="/completed" element={<CompletedTransaction />} />
+            <Route path="/closed" element={<ClosedSession />} />
+            <Route path="/autoclosed" element={<AutoClosedSession />} />
+          </Route>
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

@@ -4,7 +4,7 @@ import { BsGooglePlay } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <footer className="mt-auto p-7 lg:px-20 bg-color-bg shadow md:flex md:items-center md:justify-between">
+    <footer className="p-7 lg:px-20 bg-color-bg shadow md:flex md:items-center md:justify-between">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
         <div>
           {/* Redes sociales */}

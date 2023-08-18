@@ -8,7 +8,7 @@ function CompletedTransaction() {
   
   return (
     <div className="flex justify-center items-center h-screen flex-col bg-color-bg">
-      <div className=" bg-color-bg p-6 rounded shadow-md max-w-sm">
+      <div className=" bg-color-bg p-6 mt-[7rem] rounded shadow-md max-w-sm">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="100"

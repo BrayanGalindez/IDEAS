@@ -3,15 +3,18 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 //import datahistory from "./dataHistory/datahistory.json";
 import axios from "axios"; // Importa la librería Axios
+import { Spin } from "../components/Spin" 
 
 const API = "https://ideas-backend.vercel.app/api/"; // Nombre de la Api
 
 function History() {
     const [transaction, setTransaction] = useState([]);
+    const [load, setLoad] = useState(false); // Estado para el loading
 
     //Creo una funcion para traer el historial de transacciones del usuario
     const getHistory = () => {
         //Creo 3 variables para los datos del localStorage
+        setLoad(true)
         const data = localStorage.getItem("userData");
         const userData = JSON.parse(data);
         const token = localStorage.getItem("jwtToken");
@@ -23,8 +26,10 @@ function History() {
             })
             .then((response) => {
                 if (response.status == 200) {
+                    setLoad(false)
                     setTransaction(response.data);
                 } else {
+                    setLoad(false)
                     console.error(
                         "Error: No se encontraron datos de la transaccion "
                     );
@@ -106,6 +111,8 @@ function History() {
                     ))}
                 </div>
             </div>
+
+            {load === true ? <Spin/> : ""}
 
             <Link to="/transfer">
                 <button className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-4 m-12 w-80 block mx-auto">

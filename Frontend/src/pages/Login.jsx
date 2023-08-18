@@ -3,12 +3,13 @@ import { useContext, useState } from "react";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { Spin } from "../components/Spin";
 import { SesionContext } from "../context/SesionContext";
 import validateLogin from "../utils/validateLogin";
 import { formatCardNumber, formatPinNumber } from "../utils/formatLogin";
 
 const Login = () => {
-  const { login, sesionError } = useContext(SesionContext);
+  const { login, error, load, setError } = useContext(SesionContext);
   const navigate = useNavigate(); // Obtiene la función navigate
   const [showPassword, setShowPassword] = useState(false);
 
@@ -50,20 +51,27 @@ const Login = () => {
       await login(cardNumberWithoutHyphens, formData.pin);
 
       return navigate("/balance");
-    } else {
-      setErrors(validationErrors);
+    }else {
+      setErrors(validationErrors)
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-28 mb-20">
+    <div className="flex flex-col items-center justify-center mt-14 min-h-[100vh]">
       <div className="max-w-[24.5rem] rounded overflow-hidden shadow-lg p-6 bg-white">
         <img className="h-20 mx-auto" src={logo} alt="Logo" />
         <h1 className="text-3xl font-bold text-center mt-4">Saint Patrick</h1>
         <form onSubmit={handleLogin} className="mt-6">
           <h1 className="text-xl font-[Open Sans] mb-2">Usuario</h1>
           <input
-            className={`w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500 ${errors.cardNumber && "border border-red-700"}`}
+            onClick={() => {
+              setError("");
+            }}
+            className={
+              !error
+                ? "w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
+                : "w-full px-4 py-2 rounded border border-red-700"
+            }
             type="text"
             name="cardNumber"
             value={formData.cardNumber}
@@ -72,7 +80,14 @@ const Login = () => {
           <h1 className="text-xl font-[Open Sans] mt-4 mb-2">Pin</h1>
           <div className="relative">
             <input
-              className={`w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500 ${errors.pin && "border border-red-700"}`}
+              onClick={() => {
+                setError("");
+              }}
+              className={
+                !error
+                  ? "w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
+                  : "w-full px-4 py-2 rounded border border-red-700"
+              }
               type={showPassword ? "text" : "password"}
               name="pin"
               value={formData.pin}
@@ -89,15 +104,27 @@ const Login = () => {
               )}
             </div>
           </div>
-          <p className="text-red-700 text-[0.9rem] mt-3 text-center">
-            {sesionError?.message || errors?.cardNumber || errors?.pin}
+          <p className="text-red-600 font-[Open Sans] text-sm mt-4 flex justify-center">
+            {load ? null : error || errors.cardNumber || errors.pin}
           </p>
-          <button
-            className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full"
-            type="submit"
-          >
-            Iniciar sesión
-          </button>
+          {load ? <Spin /> : null}
+          {formData.pin !== "" && formData.cardNumber !== "" ? (
+            <button
+              onClick={handleLogin}
+              className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full"
+              type="submit"
+            >
+              Iniciar sesión
+            </button>
+          ) : (
+            <button
+              className="font-[Open Sans] text-black bg-color-button-hover disabled:opacity-100 rounded-full px-6 py-2 mt-6 cursor-not-allowed w-full"
+              disabled
+              type="submit"
+            >
+              Iniciar sesión
+            </button>
+          )}
           <p className="text-gray-600 font-[Open Sans] text-sm mt-6">
             Al continuar, confirmo que he leído y acepto los{" "}
             <span className="text-color-terms font-[Open Sans] cursor-pointer">

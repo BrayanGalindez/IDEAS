@@ -4,14 +4,16 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 export const SesionProvider = ({ children }) => {
+  const [error, setError] = useState("");
+  const [load, setLoad] = useState(false); // Estado para el loading
   const [sesionData, setSesionData] = useState({
     userData: null,
     token: window.localStorage.getItem("jwtToken"),
   });
-  const [sesionError, setSesionError] = useState("")
 
   const login = async (cardNumber, pin) => {
     try {
+      setLoad(true)
       const response = await axios.post(
         "https://ideas-backend.vercel.app/api/users/login",
         {
@@ -21,23 +23,28 @@ export const SesionProvider = ({ children }) => {
       );
 
       if (response.status === 200) {
+        setLoad(false)
         const userData = response.data[0];
 
         localStorage.setItem("userData", JSON.stringify(userData));
         localStorage.setItem("jwtToken", userData.jwtToken);
 
         setSesionData({ userData: userData, token: userData.jwtToken });
-      } else {
-        console.error("Error al obtener los datos de usuarios");
       }
+
     } catch (error) {
-      console.error("Error al iniciar sesion", error);
-      setSesionError(error.response.data)
+      setSesionData({
+        userData: null,
+        token: window.localStorage.getItem("jwtToken"),
+      })
+      setLoad(false)
+      setError("Usuario no encontrado o PIN incorrecto")
+      console.error("Error al iniciar sesión:", error);
     }
   };
 
   return (
-    <SesionContext.Provider value={{ login, sesionData, sesionError }}>
+    <SesionContext.Provider value={{ login, sesionData, error, load, setError }}>
       {children}
     </SesionContext.Provider>
   );
