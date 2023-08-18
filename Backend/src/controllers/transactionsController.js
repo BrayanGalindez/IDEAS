@@ -1,6 +1,7 @@
 const { TransactionsObject } = require('../dao/transactionsDao')
 const { UsersObject } = require('../dao/usersDao')
 const { CardsObject } = require('../dao/cardsDao')
+const { checkUserTransactionHelper } = require('../helpers/usersHelper')
 
 exports.getUserTransactions = async (req, res) => {
   try {
@@ -51,40 +52,14 @@ exports.getUserTransactions = async (req, res) => {
 
 exports.postUserTransaction = async (req, res) => {
   try {
-    // Estan correctos los datos de origen y el usuario autorizado?
-    const userId = await CardsObject.getUserIdByCardNumber(req.body.tarjeta_origen)
-    if (!userId) {
+    const checkResponse = await checkUserTransactionHelper(req)
+    if (!checkResponse.valid) {
       return res.status(400).json({
-        message: 'Numero de tarjeta no valido.'
+        message: checkResponse.message,
+        valid: false
       })
     }
-    if (userId !== req.user) {
-      return res.status(400).json({
-        message: 'Usuario no autorizado.'
-      })
-    }
-
-    // Traigo los datos del usuario (nombre, apellido, saldo)
-    const origin_user = await UsersObject.getUserNameAndBalance(userId)
-       
-    // Monto de la transaccion es positivo y tiene saldo?
-    if (req.body.monto < 0 || req.body.monto > origin_user[0].saldo) {
-      return res.status(400).json({
-        message: 'Monto no valido.'
-      })
-    }
-
-    // Estan correctos los datos de destino?
-    const userRecipientId = await CardsObject.getUserIdByCardNumber(req.body.tarjeta_destino)
-    if (!userRecipientId || userRecipientId === userId) {
-      return res.status(400).json({
-        message: 'Destinatario no valido.'
-      })
-    }
-
-    // Traigo los datos del destinatario (nombre, apellido, saldo)
-    const recipient_user = await UsersObject.getUserNameAndBalance(userRecipientId)
-
+   
     // La transaccion espera el id de tarjeta y no sus numeros.
     req.body.tarjeta_origen = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_origen)
     req.body.tarjeta_destino = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_destino)
@@ -93,12 +68,12 @@ exports.postUserTransaction = async (req, res) => {
     // Primero intento registrar la transaccion
     const transactionResponse = await TransactionsObject.postUserTransaction({
       ...req.body,
-      origen_usuario_id: userId,
-      origen_nombre: origin_user[0].nombre,
-      origen_apellido: origin_user[0].apellido,
-      destino_usuario_id: userRecipientId,
-      destino_nombre: recipient_user[0].nombre,
-      destino_apellido: recipient_user[0].apellido
+      origen_usuario_id: checkResponse.userData.id,
+      origen_nombre: checkResponse.userData.nombre,
+      origen_apellido: checkResponse.userData.apellido,
+      destino_usuario_id: checkResponse.userRecipientData.id,
+      destino_nombre: checkResponse.userRecipientData.nombre,
+      destino_apellido: checkResponse.userRecipientData.apellido
      })
 
     if (transactionResponse !== 1) {
@@ -108,21 +83,46 @@ exports.postUserTransaction = async (req, res) => {
     }
 
     // Si la transaccion fue exitosa, actualizo el saldo de los usuarios.
-    const userBalanceResponse = await UsersObject.changeUserBalance(userId, -req.body.monto)
-    const userRecipientBalanceResponse = await UsersObject.changeUserBalance(userRecipientId, req.body.monto)
-    const saldo = await UsersObject.getUserBalance(userId)
+    const userBalanceResponse = await UsersObject.changeUserBalance(checkResponse.userData.id, -req.body.monto)
+    const userRecipientBalanceResponse = await UsersObject.changeUserBalance(checkResponse.userRecipientData.id, req.body.monto)
     if (userBalanceResponse === 1 && userRecipientBalanceResponse === 1) {
+      const saldo = checkResponse.userData.saldo - req.body.monto
       res.status(200).json({
         message: 'Transaccion realizada con exito.',
-        saldo
+        saldo,
+        valid: true
       })
     } else {
 
       // La transaccion se realizo pero alguno de los saldos de los usuarios no pudo ser actualizado.
       res.status(400).json({
-        message: 'Error al realizar la transaccion. Comuniquese con el banco.'
+        message: 'Error al realizar la transaccion. Comuniquese con el banco.',
+        valid: false
       })
     }
+  } catch (error) {
+    res.status(500).json({ error: error, valid: false })
+  }
+}
+
+
+exports.checkUserTransaction = async (req, res) => {
+  try {
+    const checkResponse = await checkUserTransactionHelper(req)
+    if (!checkResponse.valid) {
+      return res.status(400).json({
+        message: checkResponse.message,
+        valid: false,
+        recipient_user_name: '',
+        recipient_user_last_name: ''
+      })
+    }
+    return res.status(200).json({
+      message: 'Transaccion valida.',
+      valid: true,
+      recipient_user_name: checkResponse.userRecipientData.nombre,
+      recipient_user_last_name: checkResponse.userRecipientData.apellido
+    })
   } catch (error) {
     res.status(500).json({ error })
   }
