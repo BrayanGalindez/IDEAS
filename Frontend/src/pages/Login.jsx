@@ -25,7 +25,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-28 mb-20">
+    <div className="flex flex-col items-center justify-center  mt-40 mb-20">
       <div className="max-w-[24.5rem] rounded overflow-hidden shadow-lg p-6 bg-white">
         <img className="h-20 mx-auto" src={logo} alt="Logo" />
         <h1 className="text-3xl font-bold text-center mt-4">Saint Patrick</h1>
