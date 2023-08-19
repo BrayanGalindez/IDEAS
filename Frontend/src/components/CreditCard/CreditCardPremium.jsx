@@ -19,7 +19,7 @@ const CreditCardPremium = ({ cardNumber, cardHolder, expirationDate }) => {
 
       {/* Titular de la tarjeta */}
       {/* <text x="20" y="170" fill="white" fontFamily="Inter" fontSize="16"> */}
-      <text x="28" y="170" fill="white" letterSpacing="5.88px" fontFamily="Gemunu Libre, sans-serif" fontSize="16">
+      <text x="28" y="170" fill="white" letterSpacing="1.88px" fontFamily="Gemunu Libre, sans-serif" fontSize="16">
         {cardHolder.toUpperCase()}
       </text>
 
