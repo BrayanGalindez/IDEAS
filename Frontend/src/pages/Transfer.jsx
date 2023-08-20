@@ -52,13 +52,13 @@ function Transfer() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-3xl font-bold mt-[4.6rem] mb-4">Nueva transacción</h1>
-      <div className="flex flex-wrap justify-center space-x-4 mb-6">
+    <div className="flex flex-col items-center justify-center min-h-screen m-16">
+      <h1 className="text-2xl font-normal font-[Open Sans] text-center ">Nueva transacción</h1>
+      <div className="flex flex-wrap justify-center md:space-x-4 m-5">
         {numerosDeTarjetas.map((tarjeta) => (
           <div
             key={tarjeta.cardNumber}
-            className={`p-4 rounded border ${
+            className={`p-4 rounded-xl border-2 m-5 justify-center ${
               selectedCard === tarjeta.cardNumber
                 ? "border-indigo-500"
                 : "border-gray-400"
@@ -82,7 +82,7 @@ function Transfer() {
         <div className="mb-4 flex flex-col">
           <label className="text-xl font-[Open Sans] mb-2">Monto:</label>
           <input
-            className="w-full px-4 py-2 border rounded focus:outline-none focus:border-indigo-500"
+            className="w-full px-4 py-2 border-2 rounded-md focus:outline-none focus:border-indigo-500"
             type="text"
             value={formattedAmount}
             onChange={handleAmountChange}
@@ -93,7 +93,7 @@ function Transfer() {
         <div className="mb-4 flex flex-col">
           <label className="text-xl font-[Open Sans] mb-2">Destinatario:</label>
           <input
-            className="w-full px-4 py-2 border rounded focus:outline-none focus:border-indigo-500"
+            className="w-full px-4 py-2 border-2 rounded-md focus:outline-none focus:border-indigo-500"
             type="text"
             value={formattedRecipient}
             onChange={handleRecipientChange}
@@ -110,7 +110,7 @@ function Transfer() {
         </div>
         <button
           type="button"
-          className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 mb-5 rounded"
+          className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 my-5 rounded-md"
           onClick={handleTransfer}
         >
           Transferir
