@@ -23,7 +23,7 @@ exports.getUserTransactions = async (req, res) => {
             response[i].datos_usuario = `${response[i].origen_nombre} ${response[i].origen_apellido}`
             response[i].tarjeta_origen = `${response[i].origen_nombre} ${response[i].origen_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
           }
-          response[i].fecha = `${response[i].fecha.getUTCDate().toString().padStart(2, '0')}-${response[i].fecha.getUTCMonth().toString().padStart(2, '0')}-${response[i].fecha.getUTCFullYear()}`
+          response[i].fecha = `${response[i].fecha.getUTCDate().toString().padStart(2, '0')}-${(response[i].fecha.getUTCMonth() + 1 ).toString().padStart(2, '0')}-${response[i].fecha.getUTCFullYear()}`
           
           delete response[i].origen_usuario_id
           delete response[i].destino_nombre
