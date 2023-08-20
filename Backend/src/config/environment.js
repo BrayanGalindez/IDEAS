@@ -13,5 +13,7 @@ module.exports.postgresdb = process.env.POSTGRESDB
 module.exports.postgrespassword = process.env.POSTGRESPASSWORD
 module.exports.postgresport = process.env.POSTGRESPORT
 
+module.exports.postgres_url = process.env.POSTGRES_URL
+
 module.exports.treblleApiKey = process.env.TREBLLEAPIKEY
 module.exports.treblleProjectId = process.env.TREBLLEPROJECTID

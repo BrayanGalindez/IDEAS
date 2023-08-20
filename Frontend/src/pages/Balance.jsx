@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-// import userData from "./dataBalance/databalance.json";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function Balance() {
   const [saldo, setSaldo] = useState("Cargando...");
@@ -21,7 +21,6 @@ function Balance() {
       .then((response) => {
         if (response.status === 200) {
           const data = response.data;
-
 
           if (data) {
             setSaldo(data); // Establecemos solo el saldo en el estado
@@ -49,34 +48,41 @@ function Balance() {
     setLoading(false); // Indicamos que ya hemos terminado de cargar los datos
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center p-4 min-h-screen">
-      <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
-        <div className="mb-4 flex items-center">
-          <img
-            className="h-32 w-32 rounded-full object-cover mr-4 border-4 border-solid border-color-button"
-            src={picture}
-            alt="Avatar"
-          />
-          <h1 className="text-2xl font-[Open Sans]">Bienvenido {nombre}</h1>
-        </div>
-        <div className="mb-2">
-          <h1 className="text-xl font-[Open Sans]">Usuario</h1>
-          <input
-            className="text-center w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
-            type="text"
-            value={saldo} // Asigna el valor del estado al campo de entrada
-            readOnly
-          />
-        </div>
-        <div className="mt-4">
-          <Link to="/history">
-            <button className="bg-color-button hover:bg-color-button-hover text-white font-[Open Sans] px-4 py-2 rounded w-full">
-              Historial de transacciones
-            </button>
-          </Link>
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
+    >
+      {" "}
+      <div className="flex flex-col items-center justify-center p-4 min-h-screen">
+        <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
+          <div className="mb-4 flex items-center">
+            <img
+              className="h-32 w-32 rounded-full object-cover mr-4 border-4 border-solid border-color-button"
+              src={picture}
+              alt="Avatar"
+            />
+            <h1 className="text-2xl font-[Open Sans]">Bienvenido {nombre}</h1>
+          </div>
+          <div className="mb-2">
+            <h1 className="text-xl font-[Open Sans]">Saldo: </h1>
+            <input
+              className="text-center w-full px-4 py-2 rounded border border-gray-400 focus:border-indigo-500 outline-none focus:ring focus:ring-indigo-500"
+              type="text"
+              value={saldo} // Asigna el valor del estado al campo de entrada
+              readOnly
+            />
+          </div>
+          <div className="mt-4">
+            <Link to="/history">
+              <button className="bg-color-button hover:bg-color-button-hover text-white font-[Open Sans] px-4 py-2 rounded w-full">
+                Historial de transacciones
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
