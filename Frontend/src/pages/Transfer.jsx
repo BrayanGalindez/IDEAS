@@ -109,7 +109,7 @@ function Transfer() {
               className={
                 selectedCard === tarjeta.cardNumber
                   ? "cursor-pointer"
-                  : `cursor-pointer grayscale-[100%] hover:grayscale-[0%] ease-in duration-200`
+                  : `cursor-pointer grayscale-[60%] hover:grayscale-[0%] ease-in duration-200`
               }
               onClick={() => handleCardSelect(tarjeta.cardNumber)}
             >
