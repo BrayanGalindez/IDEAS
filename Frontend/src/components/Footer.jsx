@@ -75,10 +75,10 @@ const Footer = () => {
       </div>
 
       {/* Clover images */}
-      <div className="hidden absolute mt-[-350px] right-[-100px] sm:block sm:mt-[-450px] sm:right-0 md:mt-[-350px] md:right-44 z-10">
+      <div className="hidden md:hidden lg:block absolute mt-[-350px] right-[-100px] sm:right-0 z-10">
         <img src={clover} width="240px" height="291px" alt="clover" />
       </div>
-      <div className="hidden absolute mt-[-370px] left-[-70px] rotate-[70deg] sm:block sm:mt-[-400px] sm:left-5 md:mt-[-300px] md:left-40 z-20">
+      <div className="hidden md:hidden lg:block absolute mt-[-370px] left-[-70px] rotate-[70deg] sm:left-5 z-20">
         <img src={clover} width="160px" height="200px" alt="clover" />
       </div>
     </footer>
