@@ -25,18 +25,15 @@ function Balance() {
           if (data) {
             setSaldo(data); // Establecemos solo el saldo en el estado
           } else {
-            console.error(
-              "Error: Datos de saldo no encontrados en la respuesta"
-            );
+            // console.error(
+            //   "Error: Datos de saldo no encontrados en la respuesta"
+            // );
             setSaldo("Error");
           }
-        } else {
-          console.error("Error al obtener los datos de balance");
-          setSaldo("Error"); // Manejamos el error estableciendo el estado a "Error"
         }
       })
       .catch((error) => {
-        console.error("Error de red:", error);
+        // console.error("Error de red:", error);
         setSaldo("Error"); // Manejamos el error estableciendo el estado a "Error"
       });
     const userData = JSON.parse(localStorage.getItem("userData"));

@@ -29,11 +29,11 @@ function History() {
           setTransaction(response.data);
         } else {
           setLoad(false);
-          console.error("Error: No se encontraron datos de la transaccion ");
+          // console.error("Error: No se encontraron datos de la transaccion ");
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
   };
 

@@ -39,7 +39,7 @@ export const SesionProvider = ({ children }) => {
       })
       setLoad(false)
       setError("Error en los datos ingresados")
-      console.error("Error al iniciar sesión:", error);
+      // console.error("Error al iniciar sesión:", error);
     }
   };
 
