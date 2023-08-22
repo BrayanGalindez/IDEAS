@@ -21,7 +21,7 @@ exports.checkUserTransactionHelper = async (req) => {
       }
     
     // Monto de la transaccion es positivo y tiene saldo?
-    if ( !req.body.monto || req.body.monto < 0 || parseFloat(req.body.monto) > parseFloat(userData.saldo)) {
+    if ( !req.body.monto || req.body.monto < 1 || parseFloat(req.body.monto) > parseFloat(userData.saldo)) {
       return {
         message: 'Monto no valido.',
         valid: false
@@ -44,7 +44,6 @@ exports.checkUserTransactionHelper = async (req) => {
     }
 
   } catch (error) {
-    console.log(error)
     throw error
   }
 }

@@ -107,7 +107,6 @@ exports.postUserTransaction = async (req, res) => {
   }
 }
 
-
 exports.checkUserTransaction = async (req, res) => {
   try {
     const checkResponse = await checkUserTransactionHelper(req)

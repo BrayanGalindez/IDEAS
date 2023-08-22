@@ -24,7 +24,6 @@ class Transactions {
       const response = await this.pool.query(selectQuery, [id])
       return response.rows
     } catch (error) {
-      console.log(error)
       throw error
     }
   }
@@ -37,7 +36,6 @@ class Transactions {
       const response = await this.pool.query(insertQuery, [data.monto, data.origen_usuario_id, data.tarjeta_origen, data.origen_nombre, data.origen_apellido, data.destino_usuario_id, data.tarjeta_destino, data.destino_nombre, data.destino_apellido, fecha])
       return response.rowCount
     } catch (error) {
-      console.log(error)
       throw error
     }
   }

@@ -1,9 +1,9 @@
 const pkg = require('pg')
-const { pool } = pkg
+const { Pool } = pkg
 
 const { postgresuser, postgreshost, postgresdb, postgrespassword, postgresport } = require('./environment.js')
 
-const pool = new pool({
+const pool = new Pool({
   user: postgresuser,
   host: postgreshost,
   database: postgresdb,
