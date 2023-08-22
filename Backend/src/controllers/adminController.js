@@ -157,7 +157,6 @@ exports.deleteCard = async (req, res) => {
       res.status(400).json({ message: 'Debe incluir id en la peticion' })
     }
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error })
   }
 }
