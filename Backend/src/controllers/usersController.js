@@ -30,6 +30,16 @@ exports.getUserBalance = async (req, res) => {
   }
 }
 
+exports.getCardsBalance = async (req, res) => {
+  try {
+    const response = await CardsObject.getCardsNumberByUserId(req.user)
+    res.status(200).json(response)
+  } catch (error) {
+    res.status(500).json({ error })
+  }
+  
+}
+
 // ---------------------- para desarrollo
 exports.getUsers = async (_req, res) => {
   try {
