@@ -88,9 +88,14 @@ exports.postUserTransaction = async (req, res) => {
     const userRecipientBalanceResponse = await UsersObject.changeUserBalance(checkResponse.userRecipientData.id, req.body.monto)
     if (userBalanceResponse === 1 && userRecipientBalanceResponse === 1) {
       const saldo = checkResponse.userData.saldo - req.body.monto
+
+      ///nueva feature
+      const saldo2 = await CardsObject.getCardsNumberByUserId(checkResponse.userData.id) 
+
       res.status(200).json({
         message: 'Transaccion realizada con exito.',
         saldo,
+        saldo2,
         valid: true
       })
     } else {

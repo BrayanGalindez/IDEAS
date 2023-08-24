@@ -18,12 +18,10 @@ class Cards {
     }
   }
 
-  
-
   async getCardsNumberByUserId (userId) {
     try{
       await this.connectToDb()
-      const selectQuery = 'SELECT numero_tarjeta FROM ideacards WHERE usuario_id = $1 AND activo = $2'
+      const selectQuery = 'SELECT numero_tarjeta, saldo FROM ideacards WHERE usuario_id = $1 AND activo = $2'
       const response = await this.pool.query(selectQuery, [userId, true])
       return response.rowCount > 0 ? response.rows : null
     } catch (error) {
