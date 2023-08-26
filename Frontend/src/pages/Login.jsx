@@ -82,18 +82,18 @@ const Login = () => {
             {pin !== "" && cardNumber !== "" ? (
               <button
                 onClick={handleLogin}
-                className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-full px-6 py-2 mt-6 w-full"
+                className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-2 mt-6 w-full"
                 type="submit"
               >
-                Iniciar sesión
+                Continuar
               </button>
             ) : (
               <button
-                className="font-[Open Sans] text-black bg-color-button-hover disabled:opacity-100 rounded-full px-6 py-2 mt-6 w-full"
+                className="font-[Open Sans] text-black bg-color-button-hover disabled:opacity-100 rounded-md px-6 py-2 mt-6 w-full"
                 disabled
                 type="submit"
               >
-                Iniciar sesión
+                Continuar
               </button>
             )}
             <p className="text-gray-600 font-[Open Sans] text-sm mt-6">

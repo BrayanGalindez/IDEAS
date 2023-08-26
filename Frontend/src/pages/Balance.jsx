@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 function Balance() {
   const [saldo, setSaldo] = useState("Cargando...");
   const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
   const [picture, setPicture] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -39,6 +40,7 @@ function Balance() {
     const userData = JSON.parse(localStorage.getItem("userData"));
     if (userData) {
       setNombre(userData.nombre);
+      setApellido(userData.apellido);
       setPicture(userData.picture);
     }
 
@@ -52,15 +54,16 @@ function Balance() {
     >
       {" "}
       <div className="flex flex-col items-center justify-center p-4 min-h-screen">
-        <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
+        <div className="max-w-2xl overflow-hidden p-6 bg-white">
           <div className="mb-4 flex items-center">
             <img
               className="h-32 w-32 rounded-full object-cover mr-4 border-4 border-solid border-color-button"
               src={picture}
               alt="Avatar"
             />
-            <h1 className="text-2xl font-[Open Sans]">Bienvenido {nombre}</h1>
+            <h1 className="text-2xl font-[Open Sans]">Bienvenido <span className="block text-xl">{nombre} {apellido}</span></h1>
           </div>
+          
           <div className="mb-2">
             <h1 className="text-xl font-[Open Sans]">Saldo: </h1>
             <input
@@ -72,7 +75,7 @@ function Balance() {
           </div>
           <div className="mt-4">
             <Link to="/history">
-              <button className="bg-color-button hover:bg-color-button-hover text-white font-[Open Sans] px-4 py-2 rounded w-full">
+              <button className="bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-4 py-2 rounded w-full">
                 Historial de transacciones
               </button>
             </Link>
