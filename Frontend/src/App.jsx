@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { AutoLogout } from "../src/components/AutoLogout.jsx";
+// import { AutoLogout } from "../src/components/AutoLogout.jsx";
 import PageTransition from "./components/PageTransition";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
         >
             {/* Autologut: la variable sessionTimeout es la cantidad de segundo para el auto logut */}
 
-            <AutoLogout sessionTimeout={20000} />
+            {/* <AutoLogout sessionTimeout={20000} /> */}
             <Navbar />
             <PageTransition />
             <Footer />

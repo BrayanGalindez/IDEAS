@@ -5,8 +5,9 @@ export default {
     extend: {
       colors: {
         "color-bg": "#09595A",
-        "color-button": "#F5B00A",
-        "color-button-hover": "#D39E1E",
+        "color-button": "#F7C345",
+        "color-button-hover": "#F5B00A",
+        "color-button-click": "#D39E1E",
         "color-terms": "#0448F8",
       },
     },
