@@ -1,5 +1,5 @@
 import { FaTimesCircle, FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios"; // Importa la librería Axios
 import { Spin } from "../components/Spin";
@@ -7,8 +7,10 @@ import { motion } from "framer-motion";
 const API = "https://ideas-backend.vercel.app/api/"; // Nombre de la Api
 
 function History() {
+  const navigate = useNavigate();
   const [transaction, setTransaction] = useState([]);
   const [load, setLoad] = useState(false); // Estado para el loading
+
 
   //Creo una funcion para traer el historial de transacciones del usuario
   const getHistory = () => {
@@ -45,12 +47,12 @@ function History() {
     switch (status) {
       case "Realizada":
         return {
-          icon: <FaChevronUp className="text-green-500" />,
+          icon: <FaChevronUp className="text-red-500" />,
           message: "Realizada",
         };
       case "Recibida":
         return {
-          icon: <FaChevronDown className="text-blue-500" />,
+          icon: <FaChevronDown className="text-green-500" />,
           message: "Recibida",
         };
       case "Fallada":
@@ -91,7 +93,7 @@ function History() {
                     <div className="text-start">
                       {renderStatusIconAndMessage(transaction.descripcion).icon}
                     </div>
-                    <span className="ml-10 text-lg text-right">
+                    <span className="ml-10 text-lg text-right w-20">
                       {
                         renderStatusIconAndMessage(transaction.descripcion)
                           .message
@@ -108,12 +110,23 @@ function History() {
         </div>
 
         {load === true ? <Spin /> : ""}
-
-        <Link to="/transfer">
-          <button className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-4 m-12 w-80 block mx-auto">
-            Nueva transacción
-          </button>
-        </Link>
+        <button
+          type="button"
+          className="font-[Open Sans] bg-transparent border-2 border-black opacity-60 bg-opacity-60 hover:opacity-100 text-black rounded-md px-6 py-4 m-12 w-80 block mx-auto"
+          onClick={() => {
+            navigate("/balance");
+          }}
+        >
+          Volver
+        </button>
+        <button
+          className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-4 m-12 w-80 block mx-auto"
+          onClick={() => {
+            navigate("/transfer");
+          }}
+        >
+          Nueva transacción
+        </button>
       </div>
     </motion.div>
   );
