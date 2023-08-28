@@ -4,8 +4,7 @@ const { generateJwtToken } = require('../middlewares/auth')
 
 exports.userLogin = async (req, res) => {
   try {
-    const userId = await CardsObject.getUserIdByCardNumber(req.body.cardNumber)
-    const response = await UsersObject.userLogin(userId, req.body.pin, 'USER')
+    const response = await UsersObject.userLogin(req.body.cardNumber, req.body.pin, 'USER')
     if (response.length > 0) {
       response[0].cards = await CardsObject.getCardsNumberByUserId(response[0].id)
       delete response[0].pin

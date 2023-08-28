@@ -1,3 +1,4 @@
+const { CardsObject } = require('../dao/cardsDao')
 const { UsersObject } = require('../dao/usersDao')
 
 exports.checkUserTransactionHelper = async (req) => {
@@ -5,6 +6,7 @@ exports.checkUserTransactionHelper = async (req) => {
 
     // Obtengo datos de usuarios
     const userData = await UsersObject.getUserByCardNumber(req.body.tarjeta_origen)
+    const cardBalance = await CardsObject.getCardBalance(req.body.tarjeta_origen)
     const userRecipientData = await UsersObject.getUserByCardNumber(req.body.tarjeta_destino)
 
     // Estan correctos los datos de origen y el usuario esta autorizado?
@@ -21,7 +23,7 @@ exports.checkUserTransactionHelper = async (req) => {
       }
     
     // Monto de la transaccion es positivo y tiene saldo?
-    if ( !req.body.monto || req.body.monto < 1 || parseFloat(req.body.monto) > parseFloat(userData.saldo)) {
+    if ( !req.body.monto || req.body.monto < 1 || parseFloat(req.body.monto) > parseFloat(cardBalance)) {
       return {
         message: 'Monto no valido.',
         valid: false
@@ -29,7 +31,7 @@ exports.checkUserTransactionHelper = async (req) => {
     }
 
     // Estan correctos los datos de destino?
-    if (!userRecipientData || userRecipientData.id === req.user) {
+    if (!userRecipientData) {
       return {
         message: 'Destinatario no valido.',
         valid: false
@@ -40,6 +42,7 @@ exports.checkUserTransactionHelper = async (req) => {
       message: 'Transacción valida.',
       valid: true,
       userData,
+      cardBalance,
       userRecipientData
     }
 

@@ -1,4 +1,5 @@
 const creditCardGenerator = require('creditcard-generator')
+const bcrypt = require('bcrypt')
 const { pool, connectToDb } = require('../config/postgreConection')
 
 class Cards {
@@ -51,12 +52,34 @@ class Cards {
     }
   }
 
-  async newCard (userId) {
+  async getCardBalance (cardNumber) {
+    try {
+      await this.connectToDb()
+      const selectQuery = 'SELECT saldo FROM ideacards WHERE numero_tarjeta = $1'
+      const response = await this.pool.query(selectQuery, [cardNumber])
+      return response.rowCount > 0 ? response.rows[0].saldo : null
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async changeCardBalance (cardId, amount) {
+    try {
+      await this.connectToDb()
+      const updateQuery = 'UPDATE ideacards SET saldo = saldo + $1 WHERE id = $2'
+      const response = await this.pool.query(updateQuery, [amount, cardId])
+      return response.rowCount
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async newCard (userId, pin) {
     try {
       await this.connectToDb()
       const cardNumber = await creditCardGenerator.GenCC('VISA')[0].toString()
-      const insertQuery = 'INSERT INTO ideacards (usuario_id, numero_tarjeta) VALUES ($1, $2)'
-      const response = await this.pool.query(insertQuery, [userId, cardNumber])
+      const insertQuery = 'INSERT INTO ideacards (usuario_id, numero_tarjeta, pin) VALUES ($1, $2, $3)'
+      const response = await this.pool.query(insertQuery, [userId, cardNumber, pin])
       return { count: response.rowCount, cardNumber }
     } catch (error) {
       throw error
