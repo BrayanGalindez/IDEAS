@@ -7,13 +7,15 @@ class Users {
     this.connectToDb = connectToDb
   }
 
-  async userLogin (userId, pin, role) {
+  async userLogin (cardNumber, pin, role) {
     try {
       await this.connectToDb()
-      const selectQuery = 'SELECT * FROM ideausers WHERE id = $1 AND activo = $2 AND role = $3'
-      const response = await this.pool.query(selectQuery, [userId, true, role])
+      const selectQuery = 'SELECT * FROM ideacards WHERE numero_tarjeta = $1 AND activo = $2'
+      const response = await this.pool.query(selectQuery, [cardNumber, true])
       if (response.rowCount > 0 && bcrypt.compareSync(pin, response.rows[0].pin)) {
-        return response.rows
+        const userQuery = 'SELECT * FROM ideausers WHERE id = $1 AND activo = $2'
+        const user = await this.pool.query(userQuery, [response.rows[0].usuario_id, true])
+        return user.rows
       }
       return []
     } catch (error) {

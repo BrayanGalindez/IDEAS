@@ -113,7 +113,7 @@ exports.deleteUser = async (req, res) => {
 // ------------- Admin cards
 exports.newCard = async (req, res) => {
   try {
-    if (!req.body.userId) {
+    if (!req.body.userId || !req.body.pin ) {
       return res.status(400).json({
         message: 'Debe incluir userId'
       })
@@ -124,7 +124,8 @@ exports.newCard = async (req, res) => {
         message: 'Usuario no encontrado'
       })
     }
-    const response = await CardsObject.newCard(req.body.userId)
+    req.body.pin = bcrypt.hashSync(req.body.pin, saltRounds)
+    const response = await CardsObject.newCard(req.body.userId, req.body.pin)
     if (response.count === 1) {
       res.status(200).json({
         message: 'Tarjeta creada con exito',

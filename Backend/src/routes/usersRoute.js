@@ -19,6 +19,15 @@ usersRoute.get(
   }
 )
 
+usersRoute.get(
+  '/users/cardsbalance',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    usersController.getCardsBalance(req, res)
+  }
+)
+
+
 // ----------------------- para desarrollo
 usersRoute.get(
   '/users',

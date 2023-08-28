@@ -65,7 +65,7 @@ exports.postUserTransaction = async (req, res) => {
     req.body.tarjeta_origen = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_origen)
     req.body.tarjeta_destino = await CardsObject.getCardIdByCardNumber(req.body.tarjeta_destino)
     
-    // Hacer la transaccion
+        // Hacer la transaccion
     // Primero intento registrar la transaccion
     const transactionResponse = await TransactionsObject.postUserTransaction({
       ...req.body,
@@ -76,21 +76,27 @@ exports.postUserTransaction = async (req, res) => {
       destino_nombre: checkResponse.userRecipientData.nombre,
       destino_apellido: checkResponse.userRecipientData.apellido
      })
-
+ 
     if (transactionResponse !== 1) {
       return res.status(400).json({
         message: 'Error al realizar la transaccion. Comuniquese con el banco.'
       })
     }
 
-    // Si la transaccion fue exitosa, actualizo el saldo de los usuarios.
-    const userBalanceResponse = await UsersObject.changeUserBalance(checkResponse.userData.id, -req.body.monto)
-    const userRecipientBalanceResponse = await UsersObject.changeUserBalance(checkResponse.userRecipientData.id, req.body.monto)
-    if (userBalanceResponse === 1 && userRecipientBalanceResponse === 1) {
-      const saldo = checkResponse.userData.saldo - req.body.monto
+    // Si la transaccion fue exitosa, actualizo el saldo de las tarjetas.
+    const cardBalanceResponse = await CardsObject.changeCardBalance(req.body.tarjeta_origen, -req.body.monto)
+    const cardRecipientBalanceResponse = await CardsObject.changeCardBalance(req.body.tarjeta_destino, req.body.monto)
+
+    if (cardBalanceResponse === 1 && cardRecipientBalanceResponse === 1) {
+      const saldo = checkResponse.cardBalance - req.body.monto
+
+      ///nueva feature
+      const saldo2 = await CardsObject.getCardsNumberByUserId(checkResponse.userData.id) 
+
       res.status(200).json({
         message: 'Transaccion realizada con exito.',
         saldo,
+        saldo2,
         valid: true
       })
     } else {
