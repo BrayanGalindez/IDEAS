@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Spin } from "../components/Spin";
 import UserProfile from "../components/UserProfile";
 import UseTransferForm from "../components/UseTransferForm";
@@ -7,14 +7,15 @@ import axios from "axios";
 import { motion } from "framer-motion";
 
 function Transfer() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [numerosDeTarjetas, setNumerosDeTarjetas] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [error, setError] = useState("");
   const [load, setLoad] = useState(false); // Estado para el loading
-  const navigate = useNavigate();
-
+  const [saldos, setSaldos] = useState([]);
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
 
@@ -26,7 +27,32 @@ function Transfer() {
       }));
       setNumerosDeTarjetas(numerosTarjetas);
     }
-  }, []);
+    const jwtToken = localStorage.getItem("jwtToken");
+    axios
+      .get("https://ideas-backend.vercel.app/api/users/cardsbalance", {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          const data = response.data;
+
+          if (data) {
+            setSaldos(data); // Establecemos solo el saldo en el estado
+          } else {
+            // console.error(
+            //   "Error: Datos de saldo no encontrados en la respuesta"
+            // );
+            setSaldos("Error");
+          }
+        }
+      })
+      .catch((error) => {
+        // console.error("Error de red:", error);
+        setSaldos("Error"); // Manejamos el error estableciendo el estado a "Error"
+      });
+  }, [location.state]);
 
   const {
     amount,
@@ -67,6 +93,7 @@ function Transfer() {
         // Navegar a la página de confirmación con los datos necesarios
         navigate("/confirm", {
           state: {
+            saldos,
             recipient,
             selectedCard,
             amount,
@@ -121,6 +148,18 @@ function Transfer() {
                 apellido={lastname}
                 handleCardSelect={handleCardSelect}
               />
+              {saldos.map(
+                (saldo, index) =>
+                  saldo.numero_tarjeta === tarjeta.cardNumber && (
+                    <input
+                      key={index}
+                      className="mt-2 px-2 py-1 border border-gray-300 rounded w-full text-right"
+                      placeholder={`Saldo de ${tarjeta.cardNumber}`}
+                      value={`$${saldo.saldo}`}
+                      readOnly
+                    />
+                  )
+              )}
             </div>
           ))}
         </div>

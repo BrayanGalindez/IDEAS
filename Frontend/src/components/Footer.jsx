@@ -26,7 +26,7 @@ const Footer = () => {
             <FaFacebook className="text-[1.2em]" />
           </a>
           <a
-            href="https://www.facebook.com/"
+            href="https://www.linkedin.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xl text-white hover:text-blue-700 transition duration-200"
