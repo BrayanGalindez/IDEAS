@@ -75,11 +75,19 @@ const Footer = () => {
       </div>
 
       {/* Clover images */}
-      <div className="hidden md:hidden lg:block absolute mt-[-350px] right-[-100px] sm:right-0 z-10">
-        <img src={clover} width="240px" height="291px" alt="clover" />
+      <div className="hidden xxxs:block xxs:block xs:block sm:block md:block lg:block absolute xxxs:mt-[-100px] xxxs:right-[10px] xxs:mt-[-100px] xxs:right-[10px] xs:mt-[-100px] xs:right-[10px] sm:mt-[-120px] sm:right-[20px] md:mt-[-220px] md:right-[50px] lg:mt-[-350px] lg:right-[100px] lg:sm:right-40 z-10">
+        <img
+          src={clover}
+          className="w-[240px] xxxs:w-[100px] xxs:w-[100px] xs:w-[160px] sm:w-[180px] md:w-[200px] lg:w-[240px] lg:sm:w-[160px]"
+          alt="clover"
+        />
       </div>
-      <div className="hidden md:hidden lg:block absolute mt-[-370px] left-[-70px] rotate-[70deg] sm:left-5 z-20">
-        <img src={clover} width="160px" height="200px" alt="clover" />
+      <div className="hidden xxxs:block xxs:block xs:block sm:block md:block lg:block absolute xxxs:mt-[-60px] xxxs:left-[10px] xxs:mt-[-60px] xxs:left-[10px] xs:mt-[-60px] xs:left-[10px] sm:mt-[-100px] sm:left-[20px] md:mt-[-220px] md:left-[50px] lg:mt-[-270px] lg:left-[100px]  lg:sm:left-40 z-20 rotate-[70deg]">
+        <img
+          src={clover}
+          className="w-[160px] xxxs:w-[80px] xxs:w-[80px] xs:w-[120px] sm:w-[140px] md:w-[160px] lg:w-[160px] lg:sm:w-[100px]"
+          alt="clover"
+        />
       </div>
     </footer>
   );

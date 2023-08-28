@@ -3,6 +3,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        'xs': '480px',
+        'xxs': '360px',
+        'xxxs': '210px',
+        
+      },
       colors: {
         "color-bg": "#09595A",
         "color-button": "#F7C345",
