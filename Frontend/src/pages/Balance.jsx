@@ -60,55 +60,65 @@ function Balance() {
       animate={{ width: "100%" }}
       exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
     >
-      <div className="flex flex-col items-center justify-center min-h-screen m-20">
-        <div className="flex items-center gap-2 mb-4">
-          <img
-            className="h-32 w-32 rounded-full object-cover border-4 border-solid border-color-button"
-            src={picture}
-            alt="Avatar"
-          />
-          <div>
-            <h1 className="text-2xl font-normal font-[Open Sans] text-center">
-              Bienvenido{" "}
-              <span className="block text-2xl">
-                {name} {lastname}
-              </span>
-            </h1>
-          </div>
-        </div>
-        <div className="flex flex-wrap justify-center md:space-x-4 m-5">
-          {numerosDeTarjetas.map((tarjeta) => (
-            <div key={tarjeta.cardNumber} className="bg-white rounded-xl p-4">
-              <UserProfile
-                card={tarjeta.cardNumber}
-                nombre={name}
-                numerosDeTarjetas={numerosDeTarjetas}
-                apellido={lastname}
-              />
-              {saldos.map(
-                (saldo, index) =>
-                  saldo.numero_tarjeta === tarjeta.cardNumber && (
-                    <input
-                      key={index}
-                      className="mt-2 px-2 py-1 border border-gray-300 rounded w-full text-right"
-                      placeholder={`Saldo de ${tarjeta.cardNumber}`}
-                      value={`$${saldo.saldo}`}
-                      readOnly
-                    />
-                  )
-              )}
+      <div className="my-40">
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex items-center gap-2 mb-4">
+            <img
+              className="h-32 w-32 rounded-full object-cover border-4 border-solid border-color-button"
+              src={picture}
+              alt="Avatar"
+            />
+            <div>
+              <h1 className="text-2xl font-normal font-[Open Sans] text-center">
+                Bienvenido{" "}
+                <span className="block text-2xl">
+                  {name} {lastname}
+                </span>
+              </h1>
             </div>
-          ))}
-        </div>
-        <div>
-          <button
-            className="bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-4 py-2 rounded w-full"
-            onClick={() => {
-              navigate("/history");
-            }}
-          >
-            Historial de transacciones
-          </button>
+          </div>
+          <div className="flex flex-wrap justify-center md:space-x-4 m-5">
+            {numerosDeTarjetas.map((tarjeta) => (
+              <div key={tarjeta.cardNumber} className="bg-white rounded-xl p-4">
+                <UserProfile
+                  card={tarjeta.cardNumber}
+                  nombre={name}
+                  numerosDeTarjetas={numerosDeTarjetas}
+                  apellido={lastname}
+                />
+                {saldos.map(
+                  (saldo, index) =>
+                    saldo.numero_tarjeta === tarjeta.cardNumber && (
+                      <div key={index} className="text-center">
+                        <div className="flex flex-col items-center">
+                          <div className="w-11/12">
+                            <p className="text-black font-[Open Sans] mb-1 text-left">
+                              Saldo
+                            </p>
+                            <input
+                              className="mt-2 px-2 py-1 border border-gray-300 rounded w-full text-right"
+                              placeholder={`Saldo de ${tarjeta.cardNumber}`}
+                              value={`$${saldo.saldo}`}
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )
+                )}
+              </div>
+            ))}
+          </div>
+          <div>
+            <button
+              className="bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-4 py-2 rounded w-full"
+              onClick={() => {
+                navigate("/history");
+              }}
+            >
+              Historial de transacciones
+            </button>
+          </div>
         </div>
       </div>
     </motion.div>
