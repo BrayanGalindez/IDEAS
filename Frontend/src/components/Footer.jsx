@@ -5,39 +5,45 @@ import clover from "../assets/clover.png";
 
 const Footer = () => {
   return (
-    <footer className="mt-auto p-7 lg:px-20 bg-color-bg shadow grid md:grid-cols-3 md:gap-6 md:items-center">
+    <footer className="mt-auto p-7 lg:px-16 bg-color-bg shadow grid md:grid-cols-3 md:gap-14 md:items-center">
       {/* Redes sociales y Términos y condiciones */}
       <div className="md:col-span-1">
         <div className="grid gap-4 justify-center">
-          <a
-            href="https://www.instagram.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-white hover:text-pink-500 transition duration-200"
-          >
-            <FaInstagram className="text-[1.2em]" />
-          </a>
-          <a
-            href="https://www.facebook.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-white hover:text-blue-600 transition duration-200"
-          >
-            <FaFacebook className="text-[1.2em]" />
-          </a>
-          <a
-            href="https://www.linkedin.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-white hover:text-blue-700 transition duration-200"
-          >
-            <FaLinkedin className="text-[1.2em]" />
-          </a>
-          <small className="col-span-3 text-center text-white mt-2 underline hover:text-color-button">
-            <a href="#">Términos y condiciones</a>
-          </small>
-          <small className="col-span-3 text-center text-white underline hover:text-color-button">
-            <a href="#">Políticas de privacidad</a>
+          <div className="flex items-center space-x-3">
+            {" "}
+            {/* Nueva contenedor div */}
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl text-white hover:text-pink-500 transition duration-200"
+            >
+              <FaInstagram className="text-[1.2em]" />
+            </a>
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl text-white hover:text-blue-600 transition duration-200"
+            >
+              <FaFacebook className="text-[1.2em]" />
+            </a>
+            <a
+              href="https://www.linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl text-white hover:text-blue-700 transition duration-200"
+            >
+              <FaLinkedin className="text-[1.2em]" />
+            </a>
+          </div>
+          <small className="col-span-3 text-start text-white mt-2">
+            <div className="underline hover:text-color-button">
+              <a>Términos y condiciones</a>
+            </div>
+            <div className="underline hover:text-color-button">
+              <a>Políticas de privacidad</a>
+            </div>
           </small>
         </div>
       </div>
