@@ -8,6 +8,7 @@ exports.userLogin = async (req, res) => {
     if (response.length > 0) {
       response[0].cards = await CardsObject.getCardsNumberByUserId(response[0].id)
       delete response[0].pin
+      delete response[0].saldo
       response[0].jwtToken = generateJwtToken(response[0].id)
       res.status(200).json(response)
     } else {
