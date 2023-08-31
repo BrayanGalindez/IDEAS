@@ -17,11 +17,9 @@ exports.getUserTransactions = async (req, res) => {
           if (response[i].origen_usuario_id === req.user) {
             response[i].descripcion = 'Realizada'
             response[i].datos_usuario = `${response[i].destino_nombre} ${response[i].destino_apellido}`
-            response[i].tarjeta_origen = `${response[i].destino_nombre} ${response[i].destino_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
           } else {
             response[i].descripcion = 'Recibida'
             response[i].datos_usuario = `${response[i].origen_nombre} ${response[i].origen_apellido}`
-            response[i].tarjeta_origen = `${response[i].origen_nombre} ${response[i].origen_apellido}` // se borra una vez que front tome los datos correctos de la respuesta .datos_usuario
           }
           response[i].fecha = `${response[i].fecha.getUTCDate().toString().padStart(2, '0')}-${(response[i].fecha.getUTCMonth() + 1 ).toString().padStart(2, '0')}-${response[i].fecha.getUTCFullYear()}`
           
@@ -88,15 +86,10 @@ exports.postUserTransaction = async (req, res) => {
     const cardRecipientBalanceResponse = await CardsObject.changeCardBalance(req.body.tarjeta_destino, req.body.monto)
 
     if (cardBalanceResponse === 1 && cardRecipientBalanceResponse === 1) {
-      const saldo = checkResponse.cardBalance - req.body.monto
-
-      ///nueva feature
-      const saldo2 = await CardsObject.getCardsNumberByUserId(checkResponse.userData.id) 
-
+      const saldo = await CardsObject.getCardsNumberByUserId(checkResponse.userData.id) 
       res.status(200).json({
         message: 'Transaccion realizada con exito.',
         saldo,
-        saldo2,
         valid: true
       })
     } else {
