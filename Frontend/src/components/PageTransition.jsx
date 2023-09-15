@@ -20,15 +20,14 @@ function PageTransition() {
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Login />} />
+        <Route path="/closed" element={<ClosedSession />} />
+        <Route path="/autoclosed" element={<AutoClosedSession />} />
         <Route element={<ProtectedRoute isAllowed={sesion} redirectTo="/" />}>
-  
           <Route path="/balance" element={<Balance />} />
           <Route path="/history" element={<History />} />
           <Route path="/transfer" element={<Transfer />} />
           <Route path="/confirm" element={<ConfirmTransfer />} />
           <Route path="/completed" element={<CompletedTransaction />} />
-          <Route path="/closed" element={<ClosedSession />} />
-          <Route path="/autoclosed" element={<AutoClosedSession />} />
         </Route>
       </Routes>
     </AnimatePresence>
