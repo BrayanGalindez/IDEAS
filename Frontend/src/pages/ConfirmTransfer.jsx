@@ -119,17 +119,16 @@ const ConfirmTransfer = () => {
             <div className="my-5">
               <button
                 type="button"
-                className="w-full bg-transparent border-2 border-black opacity-60 bg-opacity-60 hover:opacity-100 text-black font-[Open Sans] px-6 py-2 rounded-md"
+                className="bg-transparent border-2 border-black opacity-60 bg-opacity-60 hover:opacity-100 text-black font-[Open Sans] px-6 py-4 mt-4 rounded-md block w-full"
                 onClick={() => {
                   navigate("/transfer");
                 }}
               >
                 Volver
               </button>
-              <br />
               <button
                 type="button"
-                className="w-full bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-2 rounded-md mt-4"
+                className="bg-color-button hover:bg-color-button-hover text-black font-[Open Sans] px-6 py-4 rounded-md mt-4 w-full"
                 onClick={handleTransfer}
               >
                 Confirmar
