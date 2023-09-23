@@ -33,9 +33,6 @@ function History() {
           setLoad(false);
           // console.error("Error: No se encontraron datos de la transaccion ");
         }
-      })
-      .catch((error) => {
-        // console.error("Error:", error);
       });
   };
 
@@ -112,7 +109,7 @@ function History() {
         {load === true ? <Spin /> : ""}
         <button
           type="button"
-          className="font-[Open Sans] bg-transparent border-2 border-black opacity-60 bg-opacity-60 hover:opacity-100 text-black rounded-md px-6 py-4 m-12 w-80 block mx-auto"
+          className="font-[Open Sans] bg-transparent border-2 border-black opacity-60 bg-opacity-60 hover:opacity-100 text-black rounded-md px-6 py-4 mt-8 w-80 block mx-auto"
           onClick={() => {
             navigate("/balance");
           }}
@@ -120,7 +117,7 @@ function History() {
           Volver
         </button>
         <button
-          className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-4 m-12 w-80 block mx-auto"
+          className="font-[Open Sans] text-black bg-color-button hover:bg-color-button-hover rounded-md px-6 py-4 mt-4 w-80 block mx-auto"
           onClick={() => {
             navigate("/transfer");
           }}
